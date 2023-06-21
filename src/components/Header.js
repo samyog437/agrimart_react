@@ -17,10 +17,13 @@ const Header = (props) => {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="me-auto">
           <Link to="/" className="no-link" style={{ marginRight: "20px" }}>
-            Home
+            All Vegetables
           </Link>
           <Link to="/login" className="no-link">
             Login
+          </Link>
+          <Link to="/register" className="no-link">
+            Register
           </Link>
         </Nav>
 

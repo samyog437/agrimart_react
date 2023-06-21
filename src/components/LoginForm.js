@@ -34,7 +34,9 @@ const LoginForm = () => {
   };
   return (
     <>
-      <div className="user-form">
+    <div className="text-center">
+      <h2>Login</h2>
+    <div className="user-form">
         <div className="form-content">
           <div className="form-group">
             <label htmlFor="username">Username</label>
@@ -68,6 +70,8 @@ const LoginForm = () => {
           </div>
         </div>
       </div>
+    </div>
+      
       <ToastContainer />
     </>
   );

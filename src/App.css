@@ -33,3 +33,106 @@
   border: 2px #fff solid;
   background: #fff;
 }
+
+.user-form {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+
+  box-sizing: border-box;
+  margin: 10px auto 10px;
+  padding: 40px;
+
+  border-radius: 4px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, .1);
+}
+
+.form-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  margin: 0 0 20px;
+}
+
+.form-group:last-child {
+  margin: 0;
+}
+
+.form-group label {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+
+  display: block;
+
+  margin: 0 0 10px;
+
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.form-group input {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 500;
+  line-height: inherit;
+
+  display: block;
+
+  box-sizing: border-box;
+  width: 100%;
+  padding: 5px 20px;
+
+  transition: 0.3s ease;
+
+  color: rgba(0, 0, 0, 0.6);
+  border: 0;
+  border-radius: 4px;
+  outline: none;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.form-group input:focus {
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.register-button {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 500;
+  line-height: inherit;
+
+  padding: 12px 20px;
+
+  cursor: pointer;
+  text-transform: uppercase;
+
+  color: #414141!important;
+  border: 0;
+  border-radius: 4px;
+  outline: none;
+  background: #D9D9D9!important;
+}
+
+.form-group button {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 500;
+  line-height: inherit;
+
+  width: 100%;
+  padding: 12px 20px;
+
+  cursor: pointer;
+  text-transform: uppercase;
+
+  color: #fff;
+  border: 0;
+  border-radius: 4px;
+  outline: none;
+  background: #289A43;
+}
