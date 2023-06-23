@@ -100,10 +100,9 @@ const RegisterForm = () => {
             {previewImage && <img src={previewImage} alt="Blog Thumbnail" />}
           </div>
         </div>
-        <div className="form-group">
+        <div className="btn-group">
           <button onClick={onSubmit}>Register</button>
-        </div>
-        <div className="form-group">
+          <h5>or</h5>
           <Link to="/login">
             <button className="register-button">Login</button>
           </Link>

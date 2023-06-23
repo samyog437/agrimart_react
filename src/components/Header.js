@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Space } from "antd";
 import { Nav, Navbar } from "react-bootstrap";
+import UserMenu from "./UserMenu";
 
 const Header = (props) => {
   return (
@@ -19,13 +20,23 @@ const Header = (props) => {
           <Link to="/" className="no-link" style={{ marginRight: "20px" }}>
             All Vegetables
           </Link>
-          <Link to="/login" className="no-link">
-            Login
-          </Link>
-          <Link to="/register" className="no-link">
-            Register
-          </Link>
         </Nav>
+        <Navbar.Text>
+          {props.user ? (
+            <UserMenu user={props.user} />
+          ) : (
+            <>
+              <Space wrap>
+                <Link to={"/login"}>
+                  <button className="nav-button">Login</button>
+                </Link>
+                <Link to={"/register"}>
+                  <button className="nav-button">Register</button>
+                </Link>
+              </Space>
+            </>
+          )}
+        </Navbar.Text>
 
       </Navbar.Collapse>
     </Navbar>
