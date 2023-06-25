@@ -3,7 +3,7 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 /* .footer {
@@ -24,6 +24,22 @@ body {
   flex-direction: row;
 }
 
+.blog-page{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between
+}
+
+.blog-top{
+  margin: 1rem 2rem 0.5rem 2rem;
+}
+
+.blog-bottom{
+  margin: 0 2rem;
+}
+
 img, svg {
   vertical-align: baseline!important;
 }
+
+

@@ -4,13 +4,13 @@ import thumb from "../assets/images/thumbnail.jpg";
 
 const {Meta} = Card;
 const ProductCard = (props) =>{
-    const publicFolder = "http://localhost:5000/image/";
+    const publicFolder = "http://localhost:5000/uploads/";
 
     return (
         <Link to={`/products/${props.data._id}`} className="no-link">
       <Card
         style={{
-          fontFamily: "Inter",
+          fontFamily: "Poppins",
           cursor: "Pointer",
         }}
         cover={
@@ -18,9 +18,16 @@ const ProductCard = (props) =>{
 
         }
       >
-        <Meta
+        <Meta className="meta-description"
           title={props.data.title}
-          description={`Rs.${props.data.price}`}
+          description={
+          <div>
+            <span className="rs">Rs.</span>
+            <span className="price">
+              {props.data.price}
+            </span>
+          </div>
+          }
         />
       </Card>
     </Link>

@@ -140,3 +140,37 @@
   align-items: center;
   flex-direction: column;
 }
+
+.meta-description .ant-card-meta-description{
+  text-align: right;
+}
+
+.meta-description .ant-card-meta-title {
+  font-size: 20px;
+}
+
+.rs {
+  font-size: 16px;
+  font-weight:500;
+  color: black;
+}
+
+.price {
+  font-size: 20px;
+  font-weight: 500;
+  color: #289A43;
+}
+
+.blog-title {
+  font-family: "Roboto", sans-serif;
+  font-size: 30px;
+  font-weight: 600;
+
+  padding: 10px 0px;
+}
+
+.blog-content {
+  padding-bottom: 20px;
+
+  white-space: pre-wrap;
+}

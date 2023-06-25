@@ -37,7 +37,7 @@ const UserMenu = (props) => {
         <Space
           style={{
             color: "white",
-            fontFamily: "Inter",
+            fontFamily: "Poppins",
             fontWeight: "600",
             textTransform: "uppercase",
           }}
