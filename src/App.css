@@ -162,15 +162,70 @@
 }
 
 .blog-title {
-  font-family: "Roboto", sans-serif;
+  font-family: "Poppins", sans-serif;
   font-size: 30px;
   font-weight: 600;
 
-  padding: 10px 0px;
+  padding: 10px 0px 20px;
+}
+
+.blog-title-other {
+  font-size: 30px;
+  font-weight: 600;
+  padding: 10px 0;
 }
 
 .blog-content {
   padding-bottom: 20px;
 
   white-space: pre-wrap;
+  font-size: 25px;
+  font-weight: 500;
 }
+
+.increment-row {
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: center;
+}
+
+.increment-row .qty {
+  font-size: 18px;
+  margin-right: 20px;
+}
+
+.increment-btn {
+  background-color: #D9D9D9;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 2rem;
+  border-radius: 15px;
+  font-size: 20px;
+  width: 8rem;
+}
+
+.rate-btn {
+  background-color: #F29930;
+  border: 0;
+  border-radius: 8px;
+  margin-top: 1rem;
+  width: fit-content;
+  color: white;
+}
+
+.btn-group.shop {
+  display: flex;
+  flex-direction: row;
+  margin-top: 2rem;
+  justify-content: space-between;
+}
+
+.btn-group.shop button {
+  margin-right: 2rem;
+}
+
+
+
+
+

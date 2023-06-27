@@ -4,7 +4,7 @@ import thumb from "../assets/images/thumbnail.jpg";
 
 const {Meta} = Card;
 const ProductCard = (props) =>{
-    const publicFolder = "http://localhost:5000/uploads/";
+    const publicFolder = "http://localhost:5000/image/";
 
     return (
         <Link to={`/products/${props.data._id}`} className="no-link">

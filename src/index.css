@@ -24,6 +24,12 @@ body {
   flex-direction: row;
 }
 
+.product-desc {
+  display: flex;
+  flex-direction: column;
+  margin-top: 3rem;
+}
+
 .blog-page{
   display: flex;
   flex-direction: column;
@@ -32,10 +38,12 @@ body {
 
 .blog-top{
   margin: 1rem 2rem 0.5rem 2rem;
+  display: flex;
 }
 
 .blog-bottom{
   margin: 0 2rem;
+  width: 15rem;
 }
 
 img, svg {

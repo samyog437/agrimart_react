@@ -11,6 +11,9 @@ import {
     Space,
     Popconfirm,
   } from "antd";
+import {
+  MinusOutlined, PlusOutlined, StarOutlined,
+} from "@ant-design/icons"
 import ProductCard from "../components/ProductCard";
 import thumb from "../assets/images/thumbnail.jpg";
 
@@ -21,6 +24,7 @@ const ProductPage = (props) => {
     const publicFolder = "http://localhost:5000/uploads/"
     const [product, setProduct] = useState();
     const [products, setProducts] = useState([]);
+    const [quantity, setQuantity] = useState(1);
 
     useEffect(() => {
         const getProduct = async () => {
@@ -41,12 +45,22 @@ const ProductPage = (props) => {
         getProducts();
     }, [path, product?._id]);
 
+    const increaseQuantity = () => {
+      setQuantity(quantity+1);
+    };
+
+    const decreaseQuantity = () => {
+      if (quantity > 1) {
+        setQuantity(quantity-1);
+      }
+    };
+
     return (
         <>
           {product ? (
             <div className="blog-page">
               <div className="blog-top">
-                <div style={{ width: "100%", height: "350px", marginTop: "40px" }}>
+                <div style={{ width: "40%", height: "350px", marginTop: "40px" }}>
                   <img
                     src={product.image ? publicFolder + product.image : thumb}
                     alt=""
@@ -57,17 +71,33 @@ const ProductPage = (props) => {
                     }}
                   />
                 </div>
-                <div
-                  className="flex-row"
-                  style={{ justifyContent: "space-between", alignItems: "center" }}
-                >
-                  <div className="blog-title">{product.title}</div>
-                </div>
+                <div className="product-desc">
+                  <div
+                    className="flex-row"
+                    style={{ justifyContent: "space-between", alignItems: "center" }}
+                  >
+                    <div className="blog-title">{product.title}</div>
+                  </div>  
 
-                <div className="blog-content">{`Rs. ${product.price}`}</div>
+                  <div className="blog-content">{`Rs. ${product.price}/kg`}</div>
+                  <div className="increment-row">
+                    <span className="qty">QTY</span>
+                    <div className="increment-btn">
+                      <MinusOutlined onClick={decreaseQuantity} />
+                      <span>{quantity}</span>
+                      <PlusOutlined onClick={increaseQuantity} />
+                    </div>
+                  </div>
+                  <button className="rate-btn">Rate <StarOutlined style={{color:'white'}} /></button>
+                  <div className="btn-group shop">
+                    <button>Buy Now</button>
+                    <button>Add to Cart</button>
+                  </div>
+                </div>
+                
               </div>
               <div className="blog-bottom">
-                <div className="blog-title">Other Products</div>
+                <div className="blog-title-other">Other Products</div>
     
                 {products.slice(0, 3).map((ind_blog) => (
                   <Col key={ind_blog._id} style={{ marginTop: "20px" }}>
