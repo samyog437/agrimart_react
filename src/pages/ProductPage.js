@@ -10,6 +10,7 @@ import {
     Input,
     Space,
     Popconfirm,
+    Rate,
   } from "antd";
 import {
   MinusOutlined, PlusOutlined, StarOutlined,
@@ -25,12 +26,14 @@ const ProductPage = (props) => {
     const [product, setProduct] = useState();
     const [products, setProducts] = useState([]);
     const [quantity, setQuantity] = useState(1);
+    const [reviews, setReviews] = useState([]);
 
     useEffect(() => {
         const getProduct = async () => {
             const res = await axios.get("/products/"+ path);
             console.log("Current Product:", res["data"]);
             setProduct(res["data"]);
+            setReviews(res["data"].reviews);
         };
         getProduct();
 
@@ -97,6 +100,16 @@ const ProductPage = (props) => {
                 
               </div>
               <div className="blog-bottom">
+                <div className="blog-title-other">Reviews</div>
+                {reviews.map((review) => (
+                  <div key={review._id}>
+                    <div>{review.reviewerName}</div>
+                    <div><Rate allowHalf disabled value={review.rating} style={{color:"#F49723"}} /></div>
+                    <div>{review.body}</div>
+                    {/* <div>{`Date: ${review.date}`}</div> */}
+                  </div>
+                ))}
+                
                 <div className="blog-title-other">Other Products</div>
     
                 {products.slice(0, 3).map((ind_blog) => (
