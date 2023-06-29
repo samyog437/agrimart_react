@@ -169,6 +169,13 @@
   padding: 10px 0px 20px;
 }
 
+.product-image-container {
+  width: 400px;
+  height: 300px;
+  margin: 40px 40px 0 0;
+}
+
+
 .blog-title-other {
   font-size: 30px;
   font-weight: 600;
@@ -225,7 +232,24 @@
   margin-right: 2rem;
 }
 
+.review_star {
+  display: flex;
+  align-items:center;
+}
 
+.review_star > div {
+  margin: 0 10px 0 0;
+}
+
+.review_star .review_name {
+  font-size: 18px;
+  color: #635E5E;
+}
+
+.review_body {
+  font-size: 14px;
+  margin: 1rem 0 0;
+}
 
 
 

@@ -1,5 +1,5 @@
 body {
-  background: #f0f2f5;
+  background: #F2F2F2;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -28,12 +28,21 @@ body {
   display: flex;
   flex-direction: column;
   margin-top: 3rem;
+  margin-left: 5rem;
+}
+
+.product-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .blog-page{
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* justify-content: space-between; */
+  /* align-items: center; */
+  margin: 0 auto;
 }
 
 .blog-top{
@@ -43,6 +52,10 @@ body {
 
 .blog-bottom{
   margin: 0 2rem;
+  width: 100%;
+}
+
+.other-products-container {
   width: 15rem;
 }
 
