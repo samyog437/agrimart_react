@@ -7,6 +7,7 @@ const RegisterForm = () => {
   const [previewImage, setPreviewImage] = useState();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
+  const [fullname, setFullname] = useState("");
   const [password, setPassword] = useState("");
   const [image, setImage] = useState(null);
 
@@ -17,6 +18,10 @@ const RegisterForm = () => {
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
   };
+
+  const handleFullnameChange = (event) => {
+    setFullname(event.target.value);
+  }
 
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
@@ -36,6 +41,7 @@ const RegisterForm = () => {
     const user = {
       username,
       email,
+      fullname,
       password,
       image,
     };
@@ -75,6 +81,17 @@ const RegisterForm = () => {
             required="required"
             value={email}
             onChange={handleEmailChange}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="fullname">Full Name</label>
+          <input
+            type="fullname"
+            id="fullname"
+            name="fullname"
+            required="required"
+            value={fullname}
+            onChange={handleFullnameChange}
           />
         </div>
         <div className="form-group">

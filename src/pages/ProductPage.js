@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import {
     Spin,
     Avatar,
@@ -30,6 +30,8 @@ const ProductPage = (props) => {
     const [quantity, setQuantity] = useState(1);
     const [reviews, setReviews] = useState([]);
     const [reviewPopupVisible, setReviewPopupVisible] = useState(false);
+    const token = localStorage.getItem('token');
+    const navigate = useNavigate();
 
     useEffect(() => {
         const getProduct = async () => {
@@ -50,6 +52,10 @@ const ProductPage = (props) => {
         };
         getProducts();
     }, [path, product?._id]);
+
+    const handleBuyNow = () => {
+      navigate(`/products/${product._id}/delivery`)
+    }
 
     const increaseQuantity = () => {
       setQuantity(quantity+1);
@@ -99,7 +105,7 @@ const ProductPage = (props) => {
                     </div>
                     <button className="rate-btn" onClick={() => setReviewPopupVisible(true)}>Rate <StarOutlined style={{color:'white'}} /></button>
                     <div className="btn-group shop">
-                      <button>Buy Now</button>
+                      <button onClick={handleBuyNow}>Buy Now</button>
                       <button>Add to Cart</button>
                     </div>
                   </div>
@@ -110,7 +116,7 @@ const ProductPage = (props) => {
                   <div className="reviews-section">
                     {reviews.length > 0 ? (
                       reviews.map((review) => (
-                        <div key={review._id}>
+                        <div className="review_container" key={review._id}>
                           <div className="review_star">
                             <div className="review_name">{review.reviewerName}</div>
                             <div>
@@ -153,7 +159,7 @@ const ProductPage = (props) => {
               <Spin size="large" />
             </div>
           )}
-          <Review visible={reviewPopupVisible} onCancel={() => setReviewPopupVisible(false)} />
+          <Review visible={reviewPopupVisible} onCancel={() => setReviewPopupVisible(false)} token={token} />
         </>
       );
 }

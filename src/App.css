@@ -141,6 +141,10 @@
   flex-direction: column;
 }
 
+.btn-group .deliver {
+  width: fit-content;
+}
+
 .meta-description .ant-card-meta-description{
   text-align: right;
 }
@@ -238,7 +242,7 @@
 }
 
 .review_star > div {
-  margin: 0 10px 0 0;
+  margin: 0 8px 0 0;
 }
 
 .review_star .review_name {
@@ -248,8 +252,13 @@
 
 .review_body {
   font-size: 14px;
-  margin: 1rem 0 0;
+  margin: 0.5rem 0 0;
 }
+
+.review_container {
+  margin: 20px 0;
+}
+
 
 
 

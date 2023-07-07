@@ -11,6 +11,7 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import AllVegetables from './pages/AllVegetables';
 import ProductPage from "./pages/ProductPage";
+import DeliveryPage from "./pages/DeliveryPage";
 
 function App() {
   const [userId, setUserId] = useState();
@@ -44,11 +45,12 @@ function App() {
           <Route path="/" element={<Dashboard/>}/>
           <Route path="/products" element={<AllVegetables/>}/>
           <Route path="/products/:products_id" element={<ProductPage/>} />
+          <Route path="/products/:products_id/delivery" element={<DeliveryPage/>} />
           <Route path="/login" element={userId ? <Dashboard/> : <Login/>}/>
           <Route path="/register" element={userId ? <Dashboard /> : <Register/>}/>
         </Routes>
       </Container>
-      </BrowserRouter>x
+      </BrowserRouter>
     </Fragment>
   )
 }
