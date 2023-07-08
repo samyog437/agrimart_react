@@ -54,7 +54,7 @@ const ProductPage = (props) => {
     }, [path, product?._id]);
 
     const handleBuyNow = () => {
-      navigate(`/products/${product._id}/delivery`)
+      navigate(`/products/${product._id}/delivery?quantity=${quantity}`)
     }
 
     const increaseQuantity = () => {

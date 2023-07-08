@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const DeliveryPage = () => {
     const location = useLocation()
@@ -9,9 +9,9 @@ const DeliveryPage = () => {
     const [landmark, setLandmark]= useState('')
     const [contact, setContact] = useState('')
     const path = location.pathname.split("/")[2];
-    const token = localStorage.getItem('token');
-
-    const config = { headers: {Authorization: `Bearer ${token}`} }
+    const queryParams = new URLSearchParams(location.search);
+    const quantity = parseInt(queryParams.get("quantity"));
+    const navigate = useNavigate();
 
     const handleCityChange = (e) => {
       setCity(e.target.value);
@@ -29,20 +29,20 @@ const DeliveryPage = () => {
       setContact(e.target.value);
     };
 
-    const handleDeliverySubmit = async () => {
+    const handleDeliverySubmit = () => {
       const deliveryData = {
         city,
         area,
         landmark,
         contactNo: parseInt(contact),
+        quantity
       };
       console.log(deliveryData)
       try {
-        await axios.post(`/products/${path}/delivery/`, deliveryData, config);
-        alert("Product ordered successfully");
+        sessionStorage.setItem("deliveryData", JSON.stringify(deliveryData));
+        navigate(`/products/${path}/delivery/payment`);
       } catch (error) {
         console.log(`the path is ${path}`)
-        console.log(`the path is ${token}`)
         console.log(error);
       }
     };

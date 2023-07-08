@@ -12,6 +12,7 @@ import Dashboard from './pages/Dashboard';
 import AllVegetables from './pages/AllVegetables';
 import ProductPage from "./pages/ProductPage";
 import DeliveryPage from "./pages/DeliveryPage";
+import PaymentPage from "./pages/PaymentPage";
 
 function App() {
   const [userId, setUserId] = useState();
@@ -46,6 +47,7 @@ function App() {
           <Route path="/products" element={<AllVegetables/>}/>
           <Route path="/products/:products_id" element={<ProductPage/>} />
           <Route path="/products/:products_id/delivery" element={<DeliveryPage/>} />
+          <Route path="/products/:products_id/delivery/payment" element={<PaymentPage/>} />
           <Route path="/login" element={userId ? <Dashboard/> : <Login/>}/>
           <Route path="/register" element={userId ? <Dashboard /> : <Register/>}/>
         </Routes>
