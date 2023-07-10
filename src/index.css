@@ -59,8 +59,35 @@ body {
   width: 15rem;
 }
 
+.search-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px; /* Optional: Add margin-top for spacing */
+}
+
+.center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.custom-search .ant-input-affix-wrapper{
+  border-radius: 20px!important;
+  width: 30rem;
+  height: 40px;
+  font-size: 24px;
+}
+
+.custom-search .ant-input-search-button{
+  display: none;
+}
+
 img, svg {
   vertical-align: baseline!important;
 }
+
+
 
 

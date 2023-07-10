@@ -12,6 +12,7 @@ const ProductCard = (props) =>{
         style={{
           fontFamily: "Poppins",
           cursor: "Pointer",
+          height: "100%"
         }}
         cover={
           <img src={props.data.image ? publicFolder + props.data.image : thumb } alt="Thumbnail" />

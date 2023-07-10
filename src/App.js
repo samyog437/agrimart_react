@@ -41,7 +41,7 @@ function App() {
     <Fragment>
       <BrowserRouter>
       <Header user={user}/>
-      <Container style={{minHeight: "100vh"}}>
+      <Container fluid className="app-container" style={{minHeight: "100vh"}}>
         <Routes>
           <Route path="/" element={<Dashboard/>}/>
           <Route path="/products" element={<AllVegetables/>}/>
