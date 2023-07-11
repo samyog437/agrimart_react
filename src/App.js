@@ -13,6 +13,8 @@ import AllVegetables from './pages/AllVegetables';
 import ProductPage from "./pages/ProductPage";
 import DeliveryPage from "./pages/DeliveryPage";
 import PaymentPage from "./pages/PaymentPage";
+import Cart from "./pages/Cart";
+import SingleDeliveryPage from "./pages/SingleDeliveryPage";
 
 function App() {
   const [userId, setUserId] = useState();
@@ -44,10 +46,12 @@ function App() {
       <Container fluid className="app-container" style={{minHeight: "100vh"}}>
         <Routes>
           <Route path="/" element={<Dashboard/>}/>
-          <Route path="/products" element={<AllVegetables/>}/>
+          <Route path="/cart" element={<Cart/>} />
+          <Route path="/products" element={<AllVegetables/>}/>  
           <Route path="/products/:products_id" element={<ProductPage/>} />
-          <Route path="/products/:products_id/delivery" element={<DeliveryPage/>} />
-          <Route path="/products/:products_id/delivery/payment" element={<PaymentPage/>} />
+          <Route path="/delivery" element={<DeliveryPage/>} />
+          <Route path="/buy-now/delivery" element={<SingleDeliveryPage/>} />
+          <Route path="/delivery/payment" element={<PaymentPage/>} />
           <Route path="/login" element={userId ? <Dashboard/> : <Login/>}/>
           <Route path="/register" element={userId ? <Dashboard /> : <Register/>}/>
         </Routes>

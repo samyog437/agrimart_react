@@ -12,8 +12,6 @@ const DeliveryPage = () => {
     const path = location.pathname.split("/")[2];
     const queryParams = new URLSearchParams(location.search);
     const quantity = parseInt(queryParams.get("quantity"));
-    const quantities = Array.from(queryParams.values()).map((value) => parseInt(value));
-    const {cartItems} = useContext(CartContext)
     const navigate = useNavigate();
 
     const handleCityChange = (e) => {
@@ -39,19 +37,12 @@ const DeliveryPage = () => {
         landmark,
         contactNo: parseInt(contact),
         products: [
-          ...cartItems.map((item, index) => ({
-            productId: item.id,
-            quantity: quantities[index],
-          })),
+          {
+            productId: sessionStorage.getItem("productId"),
+            quantity: quantity,
+          },
         ],
       };
-    
-      const uniqueProducts = deliveryData.products.filter(
-        (product, index, self) =>
-          index === self.findIndex((p) => p.productId === product.productId)
-      );
-    
-      deliveryData.products = uniqueProducts;
     
       try {
         console.log(deliveryData);

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import {
     Spin,
@@ -19,6 +19,7 @@ import {
 import ProductCard from "../components/ProductCard";
 import thumb from "../assets/images/thumbnail.jpg";
 import Review from "../components/Review";
+import { CartContext } from "../components/CartContext";
 
 
 const ProductPage = (props) => {
@@ -32,6 +33,7 @@ const ProductPage = (props) => {
     const [reviewPopupVisible, setReviewPopupVisible] = useState(false);
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
+    const {addToCart} = useContext(CartContext);
 
     useEffect(() => {
         const getProduct = async () => {
@@ -39,6 +41,7 @@ const ProductPage = (props) => {
             console.log("Current Product:", res["data"]);
             setProduct(res["data"]);
             setReviews(res["data"].reviews);
+            sessionStorage.setItem("productId", res["data"]._id)
         };
         getProduct();
 
@@ -54,7 +57,25 @@ const ProductPage = (props) => {
     }, [path, product?._id]);
 
     const handleBuyNow = () => {
-      navigate(`/products/${product._id}/delivery?quantity=${quantity}`)
+      console.log(`The session productId is ${sessionStorage.getItem("productId")}`)
+      const deliveryData = {
+            productId: sessionStorage.getItem("productId"),
+            quantity: quantity,       
+      };
+      sessionStorage.getItem("deliveryData", JSON.stringify(deliveryData));
+      navigate(`/buy-now/delivery?quantity=${quantity}`);
+    };
+
+    const handleCart = () => {
+      const cartItem = {
+        id: product._id,
+        name: product.title,
+        price: product.price,
+        quantity: quantity,
+        image: product.image
+      };
+      addToCart(cartItem)
+      navigate(`/cart`)
     }
 
     const increaseQuantity = () => {
@@ -106,7 +127,7 @@ const ProductPage = (props) => {
                     <button className="rate-btn" onClick={() => setReviewPopupVisible(true)}>Rate <StarOutlined style={{color:'white'}} /></button>
                     <div className="btn-group shop">
                       <button onClick={handleBuyNow}>Buy Now</button>
-                      <button>Add to Cart</button>
+                      <button onClick={handleCart}>Add to Cart</button>
                     </div>
                   </div>
                   
@@ -139,7 +160,7 @@ const ProductPage = (props) => {
                   <div className="blog-title-other">Other Products</div>
                     <div className="other-products-container">
                       {products.slice(0, 3).map((ind_blog) => (
-                        <Col key={ind_blog._id} style={{ marginTop: "20px" }}>
+                        <Col className="other-product-card" span={18} key={ind_blog._id} style={{ marginTop: "20px" }}>
                           <ProductCard data={ind_blog} key={ind_blog._id} />
                         </Col>
                       ))}

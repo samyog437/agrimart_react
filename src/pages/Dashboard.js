@@ -32,7 +32,7 @@ const Dashboard = () => {
         </Col>
       </Row>
       <div className="text-center">
-        <h1>Recently Added</h1>
+        <h2>Recently Added</h2>
           <Row className="card-row" gutter={[16,24]} style={{margin:0}} >
           {products.map((product) => (
             <Col className="card-col" span={4} key={product._id}>
@@ -40,7 +40,7 @@ const Dashboard = () => {
             </Col>
           ))}
         </Row>
-        <h1>Most Popular</h1>
+        <h2>Most Popular</h2>
           <Row className="card-row" gutter={[16,24]} style={{margin:0}} >
           {products.map((product) => (
             <Col className="card-col" span={4} key={product._id}>

@@ -57,6 +57,11 @@ body {
 
 .other-products-container {
   width: 15rem;
+  display: flex;
+}
+
+.other-product-card {
+  margin: 0 2rem 2rem;
 }
 
 .search-container {

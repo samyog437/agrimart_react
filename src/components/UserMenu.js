@@ -1,3 +1,4 @@
+import { DownOutlined } from "@ant-design/icons";
 import { Avatar, Button, Dropdown, Space } from "antd";
 import { Link } from "react-router-dom";
 
@@ -20,6 +21,14 @@ const UserMenu = (props) => {
     {
       key: "2",
       label: (
+        <Link to={`/cart`}>
+          <Button type="link">My Cart</Button>
+        </Link>
+      ),
+    },
+    {
+      key: "3",
+      label: (
         <Button type="link" onClick={logout} danger>
           Logout
         </Button>
@@ -40,10 +49,11 @@ const UserMenu = (props) => {
             fontFamily: "Poppins",
             fontWeight: "600",
             textTransform: "uppercase",
+            cursor:"pointer"
           }}
         >
-          <Avatar src="https://joesch.moe/api/v1/jacques" />
           {props.user.username}
+          <DownOutlined style={{fontSize:"0.9rem"}} />
         </Space>
       </div>
     </Dropdown>

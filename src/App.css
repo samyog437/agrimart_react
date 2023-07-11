@@ -255,6 +255,12 @@
   margin: 0.5rem 0 0;
 }
 
+.reviews-section {
+  background-color: #ffffff;
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+
 .review_container {
   margin: 20px 0;
 }
@@ -268,7 +274,7 @@
   margin: 1rem 3rem;
 }
 
-.text-center > h1 {
+.text-center > h2 {
   margin-top: 2rem;
 }
 
@@ -312,6 +318,38 @@ img.searchImg {
   padding-right: 0;
 }
 
+.cart-content {
+  display: flex;
+  justify-content: center;
+  margin: 2rem;
+}
 
+.cart-list {
+  display: flex;
+  justify-content: center;
+  background-color: white;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
 
+.cart-item-left {
+  display: flex;
+  align-items: center;
+  margin-right: 20rem;
+}
+
+.cart-item-right {
+  display: flex;
+  align-items: center;
+  margin-right: 1rem;
+}
+
+.cart-name {
+  margin-left: 1rem;
+}
+
+.cart-price {
+  margin-right: 1rem;
+}
 
