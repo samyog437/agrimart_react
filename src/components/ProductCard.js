@@ -14,9 +14,9 @@ const ProductCard = (props) =>{
           cursor: "Pointer",
           height: "100%"
         }}
+        className="card-img"
         cover={
           <img src={props.data.image ? publicFolder + props.data.image : thumb } alt="Thumbnail" />
-
         }
       >
         <Meta className="meta-description"

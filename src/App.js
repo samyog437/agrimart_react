@@ -15,6 +15,7 @@ import DeliveryPage from "./pages/DeliveryPage";
 import PaymentPage from "./pages/PaymentPage";
 import Cart from "./pages/Cart";
 import SingleDeliveryPage from "./pages/SingleDeliveryPage";
+import UserProfile from "./pages/UserProfile";
 
 function App() {
   const [userId, setUserId] = useState();
@@ -52,6 +53,7 @@ function App() {
           <Route path="/delivery" element={<DeliveryPage/>} />
           <Route path="/buy-now/delivery" element={<SingleDeliveryPage/>} />
           <Route path="/delivery/payment" element={<PaymentPage/>} />
+          <Route path="/user/:user_id" element={<UserProfile user={user} token={token} />} />
           <Route path="/login" element={userId ? <Dashboard/> : <Login/>}/>
           <Route path="/register" element={userId ? <Dashboard /> : <Register/>}/>
         </Routes>

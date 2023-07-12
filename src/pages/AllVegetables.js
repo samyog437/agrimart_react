@@ -9,6 +9,8 @@ import { useLocation } from "react-router-dom";
 const AllVegetables = () => {
   const[products, setProducts] = useState([]);
   const[searchTerm, setSearchTerm] = useState("");
+  const[currentPage, setCurrentPage] = useState(1);
+  const[productsPerPage] = useState(9);
   const location = useLocation();
 
   useEffect(() => {
@@ -30,11 +32,19 @@ const AllVegetables = () => {
     setSearchTerm(event.target.value);
   }
 
-  const filteredProducts = products.filter((product) => {
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
+
+  const handleChangePage = (page) => setCurrentPage(page);
+
+  const filteredProducts = currentProducts.filter((product) => {
     const productName = product.title.toLowerCase();
     const searchTerms = searchTerm.toLowerCase();
     return productName.includes(searchTerms);
   });
+
+  
   
   return (
     <>
@@ -58,6 +68,13 @@ const AllVegetables = () => {
               </Col>
             ))}
           </Row>
+          <Pagination
+        current={currentPage}
+        pageSize={productsPerPage}
+        total={filteredProducts.length}
+        onChange={handleChangePage}
+        style={{ margin: "2rem 0rem", textAlign: "center" }}
+      />
       </div>
     </>
   );

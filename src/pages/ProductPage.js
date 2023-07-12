@@ -160,8 +160,8 @@ const ProductPage = (props) => {
                   <div className="blog-title-other">Other Products</div>
                     <div className="other-products-container">
                       {products.slice(0, 3).map((ind_blog) => (
-                        <Col className="other-product-card" span={18} key={ind_blog._id} style={{ marginTop: "20px" }}>
-                          <ProductCard data={ind_blog} key={ind_blog._id} />
+                        <Col className="other-product-card" span={20} key={ind_blog._id} style={{ marginTop: "20px" }}>
+                          <ProductCard className="productpage-card" data={ind_blog} key={ind_blog._id} />
                         </Col>
                       ))}
                     </div>
