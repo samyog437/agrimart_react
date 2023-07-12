@@ -5,9 +5,11 @@ import ProductCard from "../components/ProductCard";
 import searchBG from "../assets/images/search-bg.jpg"
 import Search from "antd/es/input/Search";
 import { SearchOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const[products, setProducts] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getProducts = async () => {
@@ -17,6 +19,10 @@ const Dashboard = () => {
     };
     getProducts();
   }, []);
+
+  const handleSearch = (searchTerm) => {
+    navigate(`/products?search=${searchTerm}`)
+  }
   
   return (
     <>
@@ -27,7 +33,7 @@ const Dashboard = () => {
                backgroundImage: `url(${searchBG})`, 
                backgroundSize: 'cover' 
                }} >
-                <Search enterButton className="dash-search" />
+                <Search enterButton className="dash-search" onSearch={handleSearch} />
           </div>
         </Col>
       </Row>

@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { CartContext } from "../components/CartContext";
 
-const DeliveryPage = () => {
+const SingleDeliveryPage = () => {
     const location = useLocation()
     const [city, setCity] = useState('')
     const [area, setArea] = useState('')
@@ -115,4 +115,4 @@ const DeliveryPage = () => {
     )
 }
 
-export default DeliveryPage;
+export default SingleDeliveryPage;
