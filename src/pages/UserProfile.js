@@ -1,36 +1,37 @@
 import { useEffect, useState } from "react";
 import profilethumb from "../assets/images/profile-user.png";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
+import { Col, Row } from "antd";
+import ProductCard from "../components/ProductCard";
 
 const UserProfile = (props) => {
-    const publicFolder = "http://localhost:5000/image/";
-    const [userData, setUserData] = useState(null);
-    const[orderData, setOrderData] = useState([]);
+    const location = useLocation();
+    const path = location.pathname.split("/")[2];
+    const [userData, setUserData] = useState();
+    const token = localStorage.getItem('token');
+
+    const config = { headers: {Authorization: `Bearer ${token}`} }
 
     useEffect(() => {
         const fetchUserData = async() => {
-            try {
-                const userId = localStorage.getItem('userId');
-                const response = await axios.get(`/user/${userId}`);
-                setUserData(response.data);
-            } catch (error) {
-                console.error(`Error fetching user data:`, error)
-            }
+            const response = await axios.get(`/user/${path}`);
+            setUserData(response.data);
         };
-        const fetchOrderData = async () => {
-            try {
-              const userId = localStorage.getItem('userId');
-              const response = await axios.get(`/orders/${userId}`);
-              setOrderData(response.data);
-            } catch (error) {
-              console.error('Error fetching order data:', error);
-            }
-        };
-
+        
         fetchUserData();
-        fetchOrderData();
     }, []);
 
+    useEffect(() => {
+        const fetchDeliveryData = async () => {
+            const response = await axios.get(`/delivery`, config);
+            setUserData((prevData) => {
+                return { ...prevData, deliveries: response.data.deliveries };
+            });
+        };
+
+        fetchDeliveryData();
+    }, []);
 
     return (
         <>
@@ -44,20 +45,23 @@ const UserProfile = (props) => {
                     <p>{userData.username}</p>
                     <p>Full Name: {userData.fullname}</p>
                     <p>Email: {userData.email}</p>
+
+                    {userData.deliveries && userData.deliveries.length > 0 ? (
+                        userData.deliveries.map(delivery => (
+                            <div key={delivery._id}>
+                                <h4>Products:</h4>
+                                <ul>
+                                    {delivery.products.map(product => (
+                                        <li key={product._id}>{product.productId.title}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                        ))
+                    ) : (
+                        <p>No deliveries found.</p>
+                    )}
                 </div>
-        )}
-        {orderData.length > 0 && (
-          <div className="order-info">
-            <h2>Orders:</h2>
-            <ul>
-              {orderData.map((order) => (
-                <li key={order.orderId}>
-                  Order ID: {order.orderId} - Total Amount: {order.totalAmount}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
+                )}
             </div>
         </>
     )

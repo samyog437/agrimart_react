@@ -21,6 +21,7 @@ function App() {
   const [userId, setUserId] = useState();
   const [token, setToken] = useState();
   const [user, setUser] = useState();
+  const [orders, setOrders] = useState();
 
   useEffect(() => {
     setUserId(localStorage.getItem("userId"));
@@ -53,7 +54,7 @@ function App() {
           <Route path="/delivery" element={<DeliveryPage/>} />
           <Route path="/buy-now/delivery" element={<SingleDeliveryPage/>} />
           <Route path="/delivery/payment" element={<PaymentPage/>} />
-          <Route path="/user/:user_id" element={<UserProfile user={user} token={token} />} />
+          <Route path="/user/:user_id" element={<UserProfile user={user} token={token} orders={orders} />} />
           <Route path="/login" element={userId ? <Dashboard/> : <Login/>}/>
           <Route path="/register" element={userId ? <Dashboard /> : <Register/>}/>
         </Routes>
