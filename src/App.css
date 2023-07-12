@@ -354,6 +354,7 @@ img.searchImg {
 
 .cart-name {
   margin-left: 1rem;
+  font-weight: 500;
 }
 
 .cart-price {
@@ -366,3 +367,56 @@ img.searchImg {
   border-radius: 50%;
 }
 
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.order-item-parent {
+  display: flex;
+  flex-direction: column;
+}
+
+.order-item-right {
+  width: 100px;
+  height: 70px;
+  display: flex;
+  align-items: last baseline;
+  justify-content: center;
+  margin-bottom: 10px;  
+}
+
+.total-price {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.user-info {
+  max-width: 800px;
+  margin: 0  auto;
+}
+
+.user-info-username {
+  margin-top: 1rem;
+  font-size: 24px;
+  color: #635E5E;
+}
+
+.user-info-data p{
+  margin-bottom: 2rem;
+}
+
+.go-back-button {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 4rem;
+  margin-bottom: 2rem;
+}
+
+.go-back-button .back-btn {
+  padding: 0 2rem;
+  font-size: 18px;
+  font-weight: 400;
+}

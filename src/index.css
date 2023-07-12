@@ -89,6 +89,13 @@ body {
   display: none;
 }
 
+.order-separator {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: none;
+  border-top: 1px solid black;
+}
+
 img, svg {
   vertical-align: baseline!important;
 }
