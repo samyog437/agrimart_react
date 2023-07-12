@@ -45,16 +45,30 @@ const UserProfile = (props) => {
                     <p>{userData.username}</p>
                     <p>Full Name: {userData.fullname}</p>
                     <p>Email: {userData.email}</p>
+                    <h2>My Orders</h2>
+                    <div className="cart-content">
+                        <div className="cart-body">
 
+                        </div>
+                    </div>
                     {userData.deliveries && userData.deliveries.length > 0 ? (
                         userData.deliveries.map(delivery => (
-                            <div key={delivery._id}>
-                                <h4>Products:</h4>
-                                <ul>
+                            <div className="cart-list" key={delivery._id}>
+                                
                                     {delivery.products.map(product => (
-                                        <li key={product._id}>{product.productId.title}</li>
+                                        <>
+                                            <div className="cart-item-left">
+                                                <div key={product._id}>
+                                                    {product.productId.title}
+                                                </div>
+                                            </div>
+                                            <div className="cart-item-right">
+                                                {/* <div key={product._id}>
+                                                    {product.productId}
+                                                </div> */}
+                                            </div>
+                                        </>
                                     ))}
-                                </ul>
                             </div>
                         ))
                     ) : (

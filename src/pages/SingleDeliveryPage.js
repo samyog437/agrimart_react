@@ -12,7 +12,9 @@ const SingleDeliveryPage = () => {
     const path = location.pathname.split("/")[2];
     const queryParams = new URLSearchParams(location.search);
     const quantity = parseInt(queryParams.get("quantity"));
+    const price = parseFloat(queryParams.get("totalPrice"));
     const navigate = useNavigate();
+    const totalPrice = quantity * price;
 
     const handleCityChange = (e) => {
       setCity(e.target.value);
@@ -36,6 +38,7 @@ const SingleDeliveryPage = () => {
         area,
         landmark,
         contactNo: parseInt(contact),
+        totalPrice,
         products: [
           {
             productId: sessionStorage.getItem("productId"),

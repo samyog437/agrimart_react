@@ -57,14 +57,14 @@ const ProductPage = (props) => {
     }, [path, product?._id]);
 
     const handleBuyNow = () => {
-      console.log(`The session productId is ${sessionStorage.getItem("productId")}`)
-      const deliveryData = {
-            productId: sessionStorage.getItem("productId"),
-            quantity: quantity,       
-      };
-      sessionStorage.getItem("deliveryData", JSON.stringify(deliveryData));
-      navigate(`/buy-now/delivery?quantity=${quantity}`);
+      const queryParams = new URLSearchParams();
+      queryParams.append("productId", sessionStorage.getItem("productId"));
+      queryParams.append("quantity", quantity);
+      queryParams.append("totalPrice", product.price * quantity);
+      
+      navigate(`/buy-now/delivery?${queryParams.toString()}`);
     };
+    
 
     const handleCart = () => {
       const cartItem = {

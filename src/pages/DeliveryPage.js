@@ -12,6 +12,7 @@ const DeliveryPage = () => {
     const path = location.pathname.split("/")[2];
     const queryParams = new URLSearchParams(location.search);
     const quantity = parseInt(queryParams.get("quantity"));
+    const totalPrice = parseInt(queryParams.get("total"))
     const quantities = Array.from(queryParams.values()).map((value) => parseInt(value));
     const {cartItems} = useContext(CartContext)
     const navigate = useNavigate();
@@ -38,6 +39,7 @@ const DeliveryPage = () => {
         area,
         landmark,
         contactNo: parseInt(contact),
+        totalPrice,
         products: [
           ...cartItems.map((item, index) => ({
             productId: item.id,
