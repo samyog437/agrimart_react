@@ -404,8 +404,10 @@ img.searchImg {
   color: #635E5E;
 }
 
-.user-info-data p{
-  margin-bottom: 2rem;
+.edit-outline {
+  margin: 0 0 2rem 0;
+  font-size: 28px;
+  color: #414141;
 }
 
 .go-back-button {
