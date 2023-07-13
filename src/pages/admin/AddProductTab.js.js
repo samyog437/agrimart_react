@@ -34,7 +34,7 @@ const AddProductTab = ({ handleSubmit, title, handleTitleChange, price, handlePr
           },
         ]}
       >
-        <Input value={price} style={inputStyles} onChange={handlePriceChange} />
+        <Input value={price} type="Number" style={inputStyles} onChange={handlePriceChange} />
       </Form.Item>
 
       <Form.Item label="Upload" valuePropName="fileList">

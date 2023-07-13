@@ -38,6 +38,31 @@ const RegisterForm = () => {
   };
 
   const onSubmit = async () => {
+    const errors = [];
+
+    if (!username) {
+      errors.push("Username is required");
+    } else if (username.length < 5) {
+      errors.push("Username must be at least 5 characters long");
+    }
+
+    if (!password) {
+      errors.push("Password is required");
+    }
+
+    if (!email) {
+      errors.push("Email is required");
+    }
+
+    if (!fullname) {
+      errors.push("Full name is required");
+    }
+
+    if (errors.length > 0) {
+      toast.error(errors.join(", "));
+      return;
+    }
+
     const user = {
       username,
       email,
@@ -118,7 +143,7 @@ const RegisterForm = () => {
           </div>
         </div>
         <div className="btn-group">
-          <button onClick={onSubmit}>Register</button>
+          <button onClick={onSubmit} className="primary-btn">Register</button>
           <h5>or</h5>
           <Link to="/login">
             <button className="register-button">Login</button>

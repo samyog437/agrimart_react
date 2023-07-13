@@ -16,7 +16,12 @@ const LoginForm = () => {
   };
 
   const onSubmit = async () => {
-    const user = {
+    if (!username || !password) {
+      toast.error("Please enter both username and password.");
+      return;
+    }
+
+    const user = {  
       username,
       password,
     };

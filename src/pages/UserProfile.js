@@ -110,7 +110,37 @@ const UserProfile = (props) => {
               )}
               {editMode && (
                 <Form onFinish={handleSubmit} layout="vertical">
-                  {/* Rest of the code... */}
+                  <Form.Item label="Username">
+                    <Input
+                      name="username"
+                      value={updatedUserData.username}
+                      onChange={handleInputChange}
+                    />
+                  </Form.Item>
+                  <Form.Item label="Full Name">
+                    <Input
+                      name="fullname"
+                      value={updatedUserData.fullname}
+                      onChange={handleInputChange}
+                    />
+                  </Form.Item>
+                  <Form.Item label="Password">
+                    <Input.Password
+                      name="password"
+                      value={updatedUserData.password}
+                      onChange={handleInputChange}
+                    />
+                  </Form.Item>
+                  <div>
+                    <Button
+                      type="primary"
+                      htmlType="submit"
+                      style={{ marginRight: "10px" }}
+                    >
+                      Save
+                    </Button>
+                    <Button onClick={handleCancelEdit}>Cancel</Button>
+                  </div>
                 </Form>
               )}
             </div>

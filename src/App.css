@@ -282,10 +282,27 @@
   margin: 20px 0;
 }
 
+/* .card-row-parent {
+  display: grid;
+  grid-template-columns: repeat(3, 0fr);
+  justify-content: center;
+} */
+
 .card-row {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+}
+
+.all-row-parent {
+  width: 100%;
+  margin: 0 15rem;
+}
+
+.all-row {
+  display: flex;  
+  justify-content:flex-start;
+  align-items: center;
 }
 
 .card-col {

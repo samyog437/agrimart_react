@@ -94,9 +94,9 @@ const AllVegetables = () => {
                   </Select>
               </div>
           </div>
-          <div className="card-row-parent">
+          <div className="all-row-parent">
           {rows.map((row, rowIndex) => (
-            <Row className="card-row" gutter={[16, 24]} key={rowIndex}>
+            <Row className="all-row" gutter={[16, 24]} key={rowIndex}>
               {row.map((product) => (
                 <Col span={4} className="card-col all-card" key={product._id}>
                   <ProductCard data={product} />
