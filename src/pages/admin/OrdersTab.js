@@ -1,7 +1,26 @@
-import React from "react";
-import { Table, Button } from "antd";
+import React, { useState } from "react";
+import { Table, Button, Modal } from "antd";
+import { DeleteOutlined, ExclamationCircleFilled } from "@ant-design/icons";
 
-const OrdersTab = ({ deliveries, handleDeliveryStatusChange }) => {
+const OrdersTab = ({ deliveries, handleDeliveryStatusChange, handleOrderDelete }) => {
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+  const [selectedOrderId, setSelectedOrderId] = useState(null);
+
+  const handleDeleteClick = (orderId) => {
+    setSelectedOrderId(orderId);
+    setDeleteModalVisible(true);
+  };
+
+  const handleDeleteConfirm = () => {
+    handleOrderDelete(selectedOrderId);
+    setDeleteModalVisible(false);
+  };
+
+  const handleDeleteCancel = () => {
+    setSelectedOrderId(null);
+    setDeleteModalVisible(false);
+  };
+
   const deliveryColumns = [
     {
       title: "SN",
@@ -35,7 +54,13 @@ const OrdersTab = ({ deliveries, handleDeliveryStatusChange }) => {
         <ul>
           {products.map((product) => (
             <li key={product.productId}>
-              {product.productId.title} - Quantity: {product.quantity}
+              {product.productId ? (
+                <>
+                  {product.productId.title} - Quantity: {product.quantity}
+                </>
+              ) : (
+                "NA"
+              )}
             </li>
           ))}
         </ul>
@@ -73,6 +98,42 @@ const OrdersTab = ({ deliveries, handleDeliveryStatusChange }) => {
         </div>
       ),
     },
+    {
+      title: "Actions",
+      dataIndex: "",
+      render: (text, record) => (
+        <>
+          <Button danger onClick={() => handleDeleteClick(record._id)}>
+            Delete
+          </Button>
+          <Modal
+  title="Delete Order"
+  visible={deleteModalVisible && selectedOrderId === record._id}
+  onOk={handleDeleteConfirm}
+  onCancel={handleDeleteCancel}
+  style={{ top: "50%", transform: "translateY(-50%)" }}
+  okButtonProps={{ className: "ok-button" }}
+  cancelButtonProps={{ className: "delete-button" }}
+  footer={[
+    <Button
+      key="cancel"
+      onClick={handleDeleteCancel}
+      className="delete-button"
+    >
+      <DeleteOutlined />
+      Cancel
+    </Button>,
+    <Button key="ok" onClick={handleDeleteConfirm} className="ok-button">
+      <ExclamationCircleFilled />
+      Delete
+    </Button>,
+  ]}
+>
+  <p>Are you sure you want to delete this order?</p>
+</Modal>
+        </>
+      ),
+    },
   ];
 
   return (
@@ -82,6 +143,7 @@ const OrdersTab = ({ deliveries, handleDeliveryStatusChange }) => {
       pagination={{
         pageSize: 5,
       }}
+      className="table-container"
     />
   );
 };

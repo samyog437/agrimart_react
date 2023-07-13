@@ -153,6 +153,16 @@
   font-size: 20px;
   text-align: left;
 }
+          
+.card-img {
+  height: 100%;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.card-img:hover {
+  transform: scale(1.06);
+}
 
 .card-img img {
   width: 100%;
@@ -441,6 +451,81 @@ width: 800px;
   cursor: pointer;
 }
 
-.table-row img {
-  width: 100%;
+.add-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 400px;
 }
+
+.ok-button {
+  color: #fff;
+  background-color: #F54040;
+}
+
+.ok-button:hover {
+  color: #fff!important;
+  background-color: #c73636!important;
+}
+
+.delete-button {
+  color: #fff;
+  background-color: #289A43;
+}
+
+.delete-icon {
+  font-size: 24px;
+  color: #BB271A;
+  transition: font-size 0.3s ease;
+}
+
+.delete-icon:hover {
+  font-size: 30px;
+}
+
+
+.delete-button:hover {
+  color: #fff!important;
+  background-color: #227b37;
+  border-color: transparent!important;
+}
+
+.cart-btn-group {
+  display: flex;
+  flex-direction: row;
+}
+
+.cart-btn-group button {
+  margin: 1rem;
+}
+
+.clear-cart-button {
+  background-color: #F54040!important;
+}
+
+.clear-cart-button:hover {
+  color: white!important;
+  background-color: #c73636!important;
+}
+
+.primary-btn:hover {
+  color: white!important;
+  background-color: #227b37!important;
+}
+
+.primary-btn {
+  color: white!important;
+  background-color: #289A43!important;
+}
+
+/* .ant-tabs-tab-active {
+  color: #289A43!important;
+}
+
+.ant-tabs-ink-bar {
+  background-color: #289A43!important;
+} */
+
+
+
+

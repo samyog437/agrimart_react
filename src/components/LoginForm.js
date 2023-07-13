@@ -74,7 +74,7 @@ const LoginForm = () => {
             />
           </div>
           <div className="btn-group">
-              <button onClick={onSubmit}>Log In</button>
+              <button className="primary-btn" onClick={onSubmit}>Log In</button>
               <h5>or</h5>
               <Link to="/register">
                 <button className="register-button">Register</button>

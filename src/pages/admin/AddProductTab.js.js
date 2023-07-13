@@ -3,9 +3,16 @@ import { Form, Input, Button } from "antd";
 
 const AddProductTab = ({ handleSubmit, title, handleTitleChange, price, handlePriceChange, handleImageChange, previewImage }) => {
   const { TextArea } = Input;
+  
+  const inputStyles = {
+    height: "40px",
+    fontSize: "24px", // Adjust the height value as per your requirement
+  };
 
   return (
-    <Form name="basic" layout="vertical" autoComplete="off">
+    <div className="user-form">
+      <div className="form-content">
+      <Form name="basic" className="add-form" layout="vertical" autoComplete="off">
       <Form.Item
         label="Title"
         rules={[
@@ -15,7 +22,7 @@ const AddProductTab = ({ handleSubmit, title, handleTitleChange, price, handlePr
           },
         ]}
       >
-        <Input value={title} onChange={handleTitleChange} />
+        <Input value={title} style={inputStyles} onChange={handleTitleChange} />
       </Form.Item>
 
       <Form.Item
@@ -27,7 +34,7 @@ const AddProductTab = ({ handleSubmit, title, handleTitleChange, price, handlePr
           },
         ]}
       >
-        <Input value={price} onChange={handlePriceChange} />
+        <Input value={price} style={inputStyles} onChange={handlePriceChange} />
       </Form.Item>
 
       <Form.Item label="Upload" valuePropName="fileList">
@@ -40,11 +47,13 @@ const AddProductTab = ({ handleSubmit, title, handleTitleChange, price, handlePr
       </Form.Item>
 
       <Form.Item>
-        <Button type="primary" onClick={handleSubmit} style={{ width: "30%" }}>
+        <Button className="primary-btn" onClick={handleSubmit} style={{ width: "30%" }}>
           Add Product
         </Button>
       </Form.Item>
     </Form>
+      </div>
+    </div>
   );
 };
 

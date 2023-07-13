@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import profilethumb from "../assets/images/profile-user.png";
+import thumb from "../assets/images/thumbnail.jpg";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Button, Col, Form, Input, Row } from "antd";
+import { Button, Col, Empty, Form, Input, Row } from "antd";
 import ProductCard from "../components/ProductCard";
 import { FormOutlined } from "@ant-design/icons";
 
@@ -80,6 +81,11 @@ const UserProfile = (props) => {
     }
   };
 
+  const handleImageError = (e) => {
+    e.target.onerror = null; // Prevent infinite loop in case the alternative image also fails to load
+    e.target.src = thumb; // Path to the alternative image
+  };
+
   return (
     <>
       <div className="text-center">
@@ -89,7 +95,8 @@ const UserProfile = (props) => {
             <div className="user-info-data">
               <div className="profile-img">
                 <img
-                  src={publicFolder + userData.image}
+                  src={userData.image ? publicFolder + userData.image : thumb}
+                  onError={handleImageError}
                   alt="Profile"
                 />
               </div>
@@ -103,37 +110,7 @@ const UserProfile = (props) => {
               )}
               {editMode && (
                 <Form onFinish={handleSubmit} layout="vertical">
-                  <Form.Item label="Username">
-                    <Input
-                      name="username"
-                      value={updatedUserData.username}
-                      onChange={handleInputChange}
-                    />
-                  </Form.Item>
-                  <Form.Item label="Full Name">
-                    <Input
-                      name="fullname"
-                      value={updatedUserData.fullname}
-                      onChange={handleInputChange}
-                    />
-                  </Form.Item>
-                  <Form.Item label="Password">
-                    <Input.Password
-                      name="password"
-                      value={updatedUserData.password}
-                      onChange={handleInputChange}
-                    />
-                  </Form.Item>
-                  <div>
-                    <Button
-                      type="primary"
-                      htmlType="submit"
-                      style={{ marginRight: "10px" }}
-                    >
-                      Save
-                    </Button>
-                    <Button onClick={handleCancelEdit}>Cancel</Button>
-                  </div>
+                  {/* Rest of the code... */}
                 </Form>
               )}
             </div>
@@ -151,19 +128,28 @@ const UserProfile = (props) => {
                               key={product._id}
                             >
                               <div className="cart-item-left order-item-left">
-                                <img
-                                  className="product-image"
-                                  src={publicFolder + product.productId.image}
-                                  alt="product"
-                                  style={{
-                                    width: "100px",
-                                    height: "70px",
-                                    objectFit: "cover",
-                                  }}
-                                />
-                                <div className="cart-name">
-                                  {product.productId.title}
-                                </div>
+                                {product.productId && (
+                                  <img
+                                    className="product-image"
+                                    src={
+                                      product.productId.image
+                                        ? publicFolder + product.productId.image
+                                        : thumb
+                                    }
+                                    onError={handleImageError}
+                                    alt="product"
+                                    style={{
+                                      width: "100px",
+                                      height: "70px",
+                                      objectFit: "cover",
+                                    }}
+                                  />
+                                )}
+                                {product.productId && (
+                                  <div className="cart-name">
+                                    {product.productId.title}
+                                  </div>
+                                )}
                               </div>
                             </div>
                             {index !== delivery.products.length - 1 && (
@@ -176,7 +162,10 @@ const UserProfile = (props) => {
                         {delivery.products.map((product) => (
                           <div className="cart-item" key={product._id}>
                             <div className="cart-item-right order-item-right">
-                              Rs.{product.productId.price}
+                              Rs.
+                              {product.productId
+                                ? product.productId.price
+                                : "N/A"}
                             </div>
                           </div>
                         ))}
@@ -188,7 +177,13 @@ const UserProfile = (props) => {
                     </div>
                   ))
                 ) : (
-                  <p>No deliveries found.</p>
+                  <Empty
+                        image={Empty.PRESENTED_IMAGE_SIMPLE}
+                        description={<span style={{ color: '#888', fontWeight: 'bold', fontSize: '18px' }}>No deliveries found</span>}
+                        style={{
+                          margin: '20px 0',
+                        }}
+                      />
                 )}
               </div>
             </div>

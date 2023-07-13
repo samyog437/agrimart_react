@@ -27,8 +27,10 @@ const AllVegetables = () => {
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
-    const searchQuery = searchParams.get("search");
+    const searchQuery = searchParams.get("search"); 
+    const filterQuery = searchParams.get('filter');
     setSearchTerm(searchQuery || "");
+    setSortOption(filterQuery)
   }, [location.search]);
 
   const handleSearch = (event) => {
@@ -82,12 +84,12 @@ const AllVegetables = () => {
           <div className="sort-class-parent">
             <div className="sort-class">
                 <Select 
-                    defaultValue="" 
+                    value={sortOption} 
                     style={{width: 150, marginLeft: 10}}
                     onChange={handleSortChange}
                     >
                       <Option value="">Sort By</Option>
-                      <Option value="purchaseCount">PurchaseCount</Option>
+                      <Option value="purchaseCount">Popularity</Option>
                       <Option value="uploadDate">Upload Date</Option>
                   </Select>
               </div>

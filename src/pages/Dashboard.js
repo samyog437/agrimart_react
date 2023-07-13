@@ -32,6 +32,10 @@ const Dashboard = () => {
         .slice()
         .sort((a,b) => b.purchaseCount - a.purchaseCount)
         .slice(0,3);
+
+  const handleViewMore = (filter) => {
+    navigate(`/products?filter=${filter}`)
+  }
   
   return (
     <>
@@ -48,6 +52,11 @@ const Dashboard = () => {
       </Row>
       <div className="text-center">
         <h2>Recently Added</h2>
+        <div className="sort-class-parent">
+          <div className="view-more-button sort-class" onClick={() => handleViewMore("uploadDate")}>
+            View more
+          </div>
+        </div>
           <Row className="card-row" gutter={[16,24]} style={{margin:0}} >
           {recentlyAddedProducts.map((product) => (
             <Col className="card-col" span={4} key={product._id}>
@@ -56,6 +65,11 @@ const Dashboard = () => {
           ))}
         </Row>
         <h2>Most Popular</h2>
+        <div className="sort-class-parent">
+          <div className="view-more-button sort-class" onClick={() => handleViewMore("purchaseCount")}>
+            View more
+          </div>
+        </div>
           <Row className="card-row" gutter={[16,24]} style={{margin:0}} >
           {mostPopularProducts.map((product) => (
             <Col className="card-col" span={4} key={product._id}>

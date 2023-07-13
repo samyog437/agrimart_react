@@ -9,15 +9,11 @@ const ProductCard = (props) =>{
     return (
         <Link to={`/products/${props.data._id}`} className="no-link">
       <Card
-        style={{
-          fontFamily: "Poppins",
-          cursor: "Pointer",
-          height: "100%"
-        }}
         className="card-img"
         cover={
           <img src={props.data.image ? publicFolder + props.data.image : thumb } alt="Thumbnail" />
         }
+        hoverable
       >
         <Meta className="meta-description"
           title={props.data.title}
