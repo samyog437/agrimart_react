@@ -4,6 +4,8 @@ import { Nav, Navbar } from "react-bootstrap";
 import UserMenu from "./UserMenu";
 
 const Header = (props) => {
+  const isAdmin = props.user && props.user.role === "Admin";
+
   return (
     <Navbar
       bg="light"
@@ -20,6 +22,11 @@ const Header = (props) => {
           <Link to="/products" className="no-link" style={{ marginRight: "20px" }}>
             All Vegetables
           </Link>
+          {isAdmin && (
+            <Link to="/admin" className="no-link">
+              Admin
+            </Link>
+          )}
         </Nav>
         <Navbar.Text>
           {props.user ? (
@@ -37,7 +44,6 @@ const Header = (props) => {
             </>
           )}
         </Navbar.Text>
-
       </Navbar.Collapse>
     </Navbar>
   );

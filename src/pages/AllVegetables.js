@@ -58,7 +58,11 @@ const AllVegetables = () => {
     sortedProducts.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
   }
 
-  
+  const rows = [];
+  for (let i = 0; i < sortedProducts.length; i += 3) {
+    const rowProducts = sortedProducts.slice(i, i + 3);
+    rows.push(rowProducts);
+  }
   
   return (
     <>
@@ -73,24 +77,32 @@ const AllVegetables = () => {
                 value={searchTerm}
                 onChange={handleSearch} 
               />
-              <Select 
-                defaultValue="" 
-                style={{width: 150, marginLeft: 10}}
-                onChange={handleSortChange}
-                >
-                  <Option value="">Sort By</Option>
-                  <Option value="purchaseCount">PurchaseCount</Option>
-                  <Option value="uploadDate">Upload Date</Option>
-              </Select>
             </div>
           </div>
-          <Row className="card-row"gutter={[16,24]} >
-            {sortedProducts.map((product) => (
-              <Col span={4} className="card-col" key={product._id}>
-                <ProductCard data={product}/>
-              </Col>
-            ))}
-          </Row>
+          <div className="sort-class-parent">
+            <div className="sort-class">
+                <Select 
+                    defaultValue="" 
+                    style={{width: 150, marginLeft: 10}}
+                    onChange={handleSortChange}
+                    >
+                      <Option value="">Sort By</Option>
+                      <Option value="purchaseCount">PurchaseCount</Option>
+                      <Option value="uploadDate">Upload Date</Option>
+                  </Select>
+              </div>
+          </div>
+          <div className="card-row-parent">
+          {rows.map((row, rowIndex) => (
+            <Row className="card-row" gutter={[16, 24]} key={rowIndex}>
+              {row.map((product) => (
+                <Col span={4} className="card-col all-card" key={product._id}>
+                  <ProductCard data={product} />
+                </Col>
+              ))}
+            </Row>
+          ))}
+          </div>  
           <Pagination
         current={currentPage}
         pageSize={productsPerPage}

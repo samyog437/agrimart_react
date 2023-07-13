@@ -2,6 +2,8 @@ import axios from "axios";
 import { useContext, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { CartContext } from "../components/CartContext";
+import KhaltiCheckout from "khalti-checkout-web";
+import khaltiConfig from "../components/Khalti/khaltiConfig";
 
 const PaymentPage = () => {
     const location = useLocation()
@@ -24,6 +26,8 @@ const PaymentPage = () => {
           alert("Failed to place order"); 
         }
       };
+    
+    let checkout = new KhaltiCheckout(khaltiConfig);
       
     return (
         <>
@@ -32,7 +36,7 @@ const PaymentPage = () => {
                 <div className="btn-group">
                     <button onClick={handleOrder}>Cash on Delivery</button>
                     <h5>or</h5>
-                    <button>Khalti</button>
+                    <button onClick={() => checkout.show({amount: 1000})}>Khalti</button>
                 </div>
             </div>
         </>

@@ -16,6 +16,7 @@ import PaymentPage from "./pages/PaymentPage";
 import Cart from "./pages/Cart";
 import SingleDeliveryPage from "./pages/SingleDeliveryPage";
 import UserProfile from "./pages/UserProfile";
+import AdminPage from "./pages/admin/admin";
 
 function App() {
   const [userId, setUserId] = useState();
@@ -41,6 +42,8 @@ function App() {
     }
   }, [userId]);
 
+  const isAdmin = user && user.role === "Admin";
+
   return (
     <Fragment>
       <BrowserRouter>
@@ -55,6 +58,7 @@ function App() {
           <Route path="/buy-now/delivery" element={<SingleDeliveryPage/>} />
           <Route path="/delivery/payment" element={<PaymentPage/>} />
           <Route path="/user/:user_id" element={<UserProfile user={user} token={token} orders={orders} />} />
+          <Route path="/admin" element={isAdmin ? <AdminPage user={user} token={token}/> : <Login/>} />
           <Route path="/login" element={userId ? <Dashboard/> : <Login/>}/>
           <Route path="/register" element={userId ? <Dashboard /> : <Register/>}/>
         </Routes>

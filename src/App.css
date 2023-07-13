@@ -275,6 +275,7 @@
 .card-row {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 .card-col {
@@ -421,4 +422,25 @@ img.searchImg {
   padding: 0 2rem;
   font-size: 18px;
   font-weight: 400;
+}
+
+.sort-class-parent {
+  display: flex;
+  justify-content:center;
+  align-items: flex-end;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.sort-class {
+width: 800px;
+}
+
+.table-row {
+  cursor: pointer;
+}
+
+.table-row img {
+  width: 100%;
 }

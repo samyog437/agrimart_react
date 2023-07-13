@@ -27,9 +27,19 @@ const LoginForm = () => {
         localStorage.setItem("userId", res["data"]["userId"]);
         localStorage.setItem("token", res["data"]["token"]);
         toast.success("Login Successful");
+        console.log('The res data is', res.data)
+
         setTimeout(() => {
-          window.location.replace("/");
-        }, 1000);
+          if (res.data.role === "Admin") {
+            // Redirect to the admin page if the user is an admin
+            window.location.replace("/admin");
+          } else {
+
+            // Redirect to the dashboard for other users
+            window.location.replace("/");
+  
+          }
+        }, 2000);
       })
       .catch((e) => {
         toast.error(`Login Failed! ${e["response"]["data"]["msg"]}`);

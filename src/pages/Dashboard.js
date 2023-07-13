@@ -23,6 +23,15 @@ const Dashboard = () => {
   const handleSearch = (searchTerm) => {
     navigate(`/products?search=${searchTerm}`)
   }
+
+  const recentlyAddedProducts = products
+        .slice()
+        .sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt))
+        .slice(0,3);
+  const mostPopularProducts = products
+        .slice()
+        .sort((a,b) => b.purchaseCount - a.purchaseCount)
+        .slice(0,3);
   
   return (
     <>
@@ -40,7 +49,7 @@ const Dashboard = () => {
       <div className="text-center">
         <h2>Recently Added</h2>
           <Row className="card-row" gutter={[16,24]} style={{margin:0}} >
-          {products.map((product) => (
+          {recentlyAddedProducts.map((product) => (
             <Col className="card-col" span={4} key={product._id}>
               <ProductCard data={product}/>
             </Col>
@@ -48,7 +57,7 @@ const Dashboard = () => {
         </Row>
         <h2>Most Popular</h2>
           <Row className="card-row" gutter={[16,24]} style={{margin:0}} >
-          {products.map((product) => (
+          {mostPopularProducts.map((product) => (
             <Col className="card-col" span={4} key={product._id}>
               <ProductCard data={product}/>
             </Col>
