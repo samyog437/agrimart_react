@@ -2,6 +2,7 @@ import axios from "axios";
 import { useContext, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { CartContext } from "../components/CartContext";
+import { ToastContainer, toast } from "react-toastify";
 
 const DeliveryPage = () => {
     const location = useLocation()
@@ -34,38 +35,46 @@ const DeliveryPage = () => {
     };
 
     const handleDeliverySubmit = () => {
-      const deliveryData = {
-        city,
-        area,
-        landmark,
-        contactNo: parseInt(contact),
-        totalPrice,
-        products: [
-          ...cartItems.map((item, index) => ({
-            productId: item.id,
-            quantity: quantities[index],
-          })),
-        ],
-      };
+      if (city && area && landmark && contact) {
+        if (contact.length === 9) {
+          const deliveryData = {
+            city,
+            area,
+            landmark,
+            contactNo: parseInt(contact),
+            totalPrice,
+            products: [
+              ...cartItems.map((item, index) => ({
+                productId: item.id,
+                quantity: quantities[index],
+              })),
+            ],
+          };
     
-      const uniqueProducts = deliveryData.products.filter(
-        (product, index, self) =>
-          index === self.findIndex((p) => p.productId === product.productId)
-      );
+          const uniqueProducts = deliveryData.products.filter(
+            (product, index, self) =>
+              index === self.findIndex((p) => p.productId === product.productId)
+          );
     
-      deliveryData.products = uniqueProducts;
+          deliveryData.products = uniqueProducts;
     
-      try {
-        console.log(deliveryData);
-        sessionStorage.setItem("deliveryData", JSON.stringify(deliveryData));
-        navigate(`/delivery/payment`);
-      } catch (error) {
-        console.log(`the path is ${path}`);
-        console.log(error);
+          try {
+            console.log(deliveryData);
+            sessionStorage.setItem("deliveryData", JSON.stringify(deliveryData));
+            navigate(`/delivery/payment`);
+          } catch (error) {
+            console.log(`the path is ${path}`);
+            console.log(error);
+          }
+        } else {
+          toast.error("Contact number must be 9 characters long.");
+        }
+      } else {
+        toast.error("Please fill in all the fields.");
       }
     };
     
-
+    
     return (
         <>
         <div className="text-center">
@@ -117,11 +126,12 @@ const DeliveryPage = () => {
             />
           </div>
           <div className="btn-group">
-              <button className="deliver" onClick={handleDeliverySubmit} >Proceed to Pay</button>
-            </div>
+            <button className="deliver" onClick={handleDeliverySubmit} >Proceed to Pay</button>
+          </div>
         </div>
       </div>
     </div>
+    <ToastContainer/>
         </>
     )
 }

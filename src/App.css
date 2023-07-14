@@ -6,7 +6,6 @@
 .navbar-logo {
   font-size: 24px;
   font-weight: 700;
-
   margin: 0px 40px 0px 20px;
 }
 
@@ -344,6 +343,15 @@ img.searchImg {
   background-color: #31be52;
 }
 
+.view-more-button {
+  color: #908f8f;
+}
+
+.view-more-button:hover {
+  cursor: pointer;
+  color: #686868;
+}
+
 .img-col {
   padding: 0!important;;
 }
@@ -535,6 +543,143 @@ width: 800px;
   background-color: #289A43!important;
 }
 
+.user-data-parent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 800px;
+}
+
+.page-title {
+  margin-top: 2rem;
+}
+
+.user-data-display {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+}
+
+.user-data-item{
+  display: flex;
+  align-items: flex-start;
+  margin: 1rem;
+  font-weight: 500;
+}
+
+.user-data-item-label {
+  color: #635E5E;
+}
+
+.user-data-item span:first-child {
+  margin-right: 5rem;
+}
+
+.about-us-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f8f8f8;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -40%);
+}
+
+.about-us-container h1 {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.about-us-container p {
+  margin-bottom: 15px;
+}
+
+.top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.left-image,
+.right-content {
+  flex-basis: 48%;
+}
+
+.left-image img,
+.right-image img {
+  width: 100%;
+  border-radius: 5px;
+}
+
+.bottom-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.left-content,
+.right-image {
+  flex-basis: 48%;
+}
+
+.agrimart-image {
+  width: 100%;
+  border-radius: 5px;
+}
+
+
+.contact-us-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f8f8f8;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -80%);
+}
+
+.contact-us-container h1 {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+
+.contact-us-container p {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.contact-us-container ul {
+  list-style-type: none;
+  padding: 0;
+  margin-bottom: 10px;
+}
+
+.contact-us-container li {
+  margin-bottom: 5px;
+}
+
+.contact-us-container a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.contact-us-container a:hover {
+  text-decoration: underline;
+}
+
+
 /* .ant-tabs-tab-active {
   color: #289A43!important;
 }
@@ -542,6 +687,7 @@ width: 800px;
 .ant-tabs-ink-bar {
   background-color: #289A43!important;
 } */
+
 
 
 

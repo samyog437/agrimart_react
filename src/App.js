@@ -17,6 +17,8 @@ import Cart from "./pages/Cart";
 import SingleDeliveryPage from "./pages/SingleDeliveryPage";
 import UserProfile from "./pages/UserProfile";
 import AdminPage from "./pages/admin/admin";
+import AboutUs from "./pages/AboutUs";
+import ContactUs from "./pages/ContactUs";
 
 function App() {
   const [userId, setUserId] = useState();
@@ -61,6 +63,8 @@ function App() {
           <Route path="/admin" element={isAdmin ? <AdminPage user={user} token={token}/> : <Login/>} />
           <Route path="/login" element={userId ? <Dashboard/> : <Login/>}/>
           <Route path="/register" element={userId ? <Dashboard /> : <Register/>}/>
+          <Route path="/about-us" element={<AboutUs/>}/>
+          <Route path="/contact-us" element={<ContactUs/>}/>
         </Routes>
       </Container>
       </BrowserRouter>

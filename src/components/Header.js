@@ -22,8 +22,14 @@ const Header = (props) => {
           <Link to="/products" className="no-link" style={{ marginRight: "20px" }}>
             All Vegetables
           </Link>
+          <Link to="/about-us" className="no-link" style={{ marginRight: "20px" }}>
+            About Us
+          </Link>
+          <Link to="/contact-us" className="no-link" style={{ marginRight: "20px" }}>
+            Contact Us
+          </Link>
           {isAdmin && (
-            <Link to="/admin" className="no-link">
+            <Link to="/admin" className="no-link" style={{ marginRight: "20px" }}>
               Admin
             </Link>
           )}

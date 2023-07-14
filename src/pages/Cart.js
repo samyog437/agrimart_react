@@ -68,10 +68,11 @@ const Cart = () => {
 
   return (
     <div className="text-center">
-      <h1 style={{ marginTop: "2rem" }}>My Cart</h1>
+      <h3 style={{ marginTop: "2rem" }}>My Cart</h3>
       <div className="sort-class-parent">
             <div className="sort-class">
             <Button
+            danger
               icon={<ArrowLeftOutlined />}
                 style={{ marginBottom: "1rem"}}
                 onClick={handleGoBack}

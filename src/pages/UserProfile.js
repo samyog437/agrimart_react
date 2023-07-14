@@ -3,21 +3,25 @@ import profilethumb from "../assets/images/profile-user.png";
 import thumb from "../assets/images/thumbnail.jpg";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Button, Col, Empty, Form, Input, Row } from "antd";
+import { Button, Col, Empty, Form, Input, Row, Spin } from "antd";
 import ProductCard from "../components/ProductCard";
 import { FormOutlined } from "@ant-design/icons";
+import { ToastContainer, toast } from "react-toastify";
 
 const UserProfile = (props) => {
   const location = useLocation();
   const navigate = useNavigate();
   const path = location.pathname.split("/")[2];
   const [userData, setUserData] = useState();
+  const [image, setImage] = useState(null);
+  const [previewImage, setPreviewImage] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [updatedUserData, setUpdatedUserData] = useState({
     username: "",
     fullname: "",
     password: "",
   });
+  const [loading, setLoading] = useState(true);
   const token = localStorage.getItem("token");
   const publicFolder = "http://localhost:5000/image/";
 
@@ -34,10 +38,16 @@ const UserProfile = (props) => {
 
   useEffect(() => {
     const fetchDeliveryData = async () => {
-      const response = await axios.get(`/delivery`, config);
-      setUserData((prevData) => {
-        return { ...prevData, deliveries: response.data.deliveries };
-      });
+      try {
+        const response = await axios.get(`/delivery`, config);
+        setUserData((prevData) => {
+          return { ...prevData, deliveries: response.data.deliveries };
+        });
+        setLoading(false);
+      } catch (err) {
+        console.error(err);
+        setLoading(false);
+      }
     };
 
     fetchDeliveryData();
@@ -67,29 +77,47 @@ const UserProfile = (props) => {
     }));
   };
 
+  const handleImageChange = (event) => {
+    const imageFile = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = () => {
+      setPreviewImage(reader.result);
+    };
+    reader.readAsDataURL(imageFile);
+    setImage(imageFile);
+  };
+
   const handleSubmit = async () => {
     try {
-      const response = await axios.put(
-        `/user/${path}`,
-        updatedUserData,
-        config
-      );
-      setUserData(response.data.data);
+      const formData = new FormData();
+      if (image) {
+        formData.append("image", image);
+      }
+      formData.append("username", updatedUserData.username);
+      formData.append("fullname", updatedUserData.fullname);
+      formData.append("password", updatedUserData.password);
+
+      const response = await axios.put(`/user/${path}`, formData, config);
+      setUserData((prevUserData) => {
+        return { ...prevUserData, username: response.data.data.username };
+      });      
       setEditMode(false);
+      toast.success('Changed user details successfully')
     } catch (err) {
       console.error(err);
+      toast.error(err)
     }
   };
 
   const handleImageError = (e) => {
-    e.target.onerror = null; // Prevent infinite loop in case the alternative image also fails to load
-    e.target.src = thumb; // Path to the alternative image
+    e.target.onerror = null;
+    e.target.src = thumb;
   };
 
   return (
     <>
       <div className="text-center">
-        <h3>Profile Details</h3>
+        <h3 className="page-title">Profile Details</h3>
         {userData && (
           <div className="user-info">
             <div className="user-info-data">
@@ -104,13 +132,41 @@ const UserProfile = (props) => {
                 <>
                   <p className="user-info-username">{userData.username}</p>
                   <FormOutlined className="edit-outline" onClick={handleEdit} />
-                  <p>Full Name: {userData.fullname}</p>
-                  <p>Email: {userData.email}</p>
+                  <div className="user-data-parent">
+                    <div className="user-data-display">
+                      <div className="user-data-item">
+                        <span className="user-data-item-label">Full Name:</span>
+                        <span>{userData.fullname}</span>
+                      </div>
+                      <div className="user-data-item">
+                        <span className="user-data-item-label">Email:</span>
+                        <span>{userData.email}</span>
+                      </div>
+                    </div>
+                  </div>
                 </>
               )}
               {editMode && (
-                <Form onFinish={handleSubmit} layout="vertical">
-                  <Form.Item label="Username">
+                <Form onFinish={handleSubmit} className="user-form" layout="vertical">
+                  <Form.Item label="Profile Image">
+                    <div>
+                      <input type="file" id="image-upload" accept="image/*" onChange={handleImageChange} />
+                    </div>
+                    <div className="preview-container">
+                      {previewImage && <img src={previewImage} alt="Profile Thumbnail" />}
+                    </div>
+                  </Form.Item>
+                  <Form.Item label="Username" 
+                      rules={[
+                      {
+                        required: true,
+                        message: "Username is required",
+                      },
+                      {
+                        min: 5,
+                        message: "Username must be at least 5 characters long",
+                      },
+                    ]}>
                     <Input
                       name="username"
                       value={updatedUserData.username}
@@ -147,7 +203,9 @@ const UserProfile = (props) => {
             <h3>My Orders</h3>
             <div className="cart-content order-content">
               <div className="cart-body order-body">
-                {userData.deliveries && userData.deliveries.length > 0 ? (
+                {loading ? (
+                  <Spin size="large" /> // Display spinner while loading
+                ) : userData.deliveries && userData.deliveries.length > 0 ? (
                   userData.deliveries.map((delivery) => (
                     <div className="cart-list" key={delivery._id}>
                       <div className="order-item-parent">
@@ -208,12 +266,12 @@ const UserProfile = (props) => {
                   ))
                 ) : (
                   <Empty
-                        image={Empty.PRESENTED_IMAGE_SIMPLE}
-                        description={<span style={{ color: '#888', fontWeight: 'bold', fontSize: '18px' }}>No deliveries found</span>}
-                        style={{
-                          margin: '20px 0',
-                        }}
-                      />
+                    image={Empty.PRESENTED_IMAGE_SIMPLE}
+                    description={<span style={{ color: '#888', fontWeight: 'bold', fontSize: '18px' }}>No deliveries found</span>}
+                    style={{
+                      margin: '20px 0',
+                    }}
+                  />
                 )}
               </div>
             </div>
@@ -233,6 +291,7 @@ const UserProfile = (props) => {
           </div>
         )}
       </div>
+      <ToastContainer/>
     </>
   );
 };

@@ -10,6 +10,12 @@ body {
 .no-link{
   text-decoration: none;
   color: inherit;
+  transition: transform 0.3s ease;
+}
+
+.no-link:hover {
+  transform: scale(1.1);
+  font-weight: 500;
 }
 
 .flex-row{
@@ -105,6 +111,20 @@ body {
   max-width: 100%;
   max-height: 100%;
   border-radius: 8px;
+}
+
+.invalid-field {
+  border: 1px solid #F54040!important;
+  background-color: white;
+}
+
+.menu-btn {
+  color: black;
+  font-weight: 500;
+}
+
+.danger-menu-btn {
+  font-weight: 700;
 }
 
 img, svg {

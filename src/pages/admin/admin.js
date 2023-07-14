@@ -39,6 +39,19 @@ const AdminPage = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+  
+    // Check if required fields are empty
+    if (!title || !price) {
+      // Highlight the empty fields
+      if (!title) {
+        toast.error("Please enter the title");
+      }
+      if (!price) {
+        toast.error("Please enter the price");
+      }
+      return;
+    }
+  
     const newProduct = {
       title,
       price,
@@ -69,9 +82,10 @@ const AdminPage = (props) => {
       })
       .catch((error) => {
         console.log(error);
-        toast.error("Error occurred while adding the product")
+        toast.error("Error occurred while adding the product");
       });
   };
+  
 
   const fetchProducts = async () => {
     try {
@@ -266,10 +280,12 @@ const AdminPage = (props) => {
           visible={editModalVisible}
           onCancel={handleCancelEdit}
           onOk={handleSaveEdit}
+          footer={null}
           destroyOnClose
         >
           <AddProductTab
             handleSubmit={handleSaveEdit}
+            isEditing={editModalVisible}
             title={title}
             handleTitleChange={handleTitleChange}
             price={price}
@@ -278,6 +294,7 @@ const AdminPage = (props) => {
             previewImage={previewImage}
           />
         </Modal>
+
       </div>
       <ToastContainer />
     </>

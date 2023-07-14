@@ -2,6 +2,7 @@ import axios from "axios";
 import { useContext, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { CartContext } from "../components/CartContext";
+import { ToastContainer, toast } from "react-toastify";
 
 const SingleDeliveryPage = () => {
     const location = useLocation()
@@ -33,29 +34,45 @@ const SingleDeliveryPage = () => {
     };
 
     const handleDeliverySubmit = () => {
-      const deliveryData = {
-        city,
-        area,
-        landmark,
-        contactNo: parseInt(contact),
-        totalPrice,
-        products: [
-          {
-            productId: sessionStorage.getItem("productId"),
-            quantity: quantity,
-          },
-        ],
-      };
-    
-      try {
-        console.log(deliveryData);
-        sessionStorage.setItem("deliveryData", JSON.stringify(deliveryData));
-        navigate(`/delivery/payment`);
-      } catch (error) {
-        console.log(`the path is ${path}`);
-        console.log(error);
-      }
+      if (city && area && landmark && contact) {
+        if (contact.length === 9) {
+          const deliveryData = {
+            city,
+            area,
+            landmark,
+            contactNo: parseInt(contact),
+            totalPrice,
+            products: [
+              {
+                productId: sessionStorage.getItem("productId"),
+                quantity: quantity,
+              },
+            ],
+          };
+      
+          try {
+            console.log(deliveryData);
+            sessionStorage.setItem("deliveryData", JSON.stringify(deliveryData));
+            navigate(`/delivery/payment`);
+          } catch (error) {
+            console.log(`the path is ${path}`);
+            console.log(error);
+          }
+        } else {
+          toast.error('Contact number must be 9 characters long. ')
+          document.getElementById("contact").classList.add("invalid-field");
+        }
+      } else {
+        // Display an error message or perform any desired action
+        toast.error('Please fill in all the fields.');
+        if (!city) document.getElementById("city").classList.add("invalid-field");
+        if (!area) document.getElementById("area").classList.add("invalid-field");
+        if (!landmark)
+          document.getElementById("landmark").classList.add("invalid-field");
+        if (!contact) document.getElementById("contact").classList.add("invalid-field");
+        }
     };
+    
     
 
     return (
@@ -109,11 +126,12 @@ const SingleDeliveryPage = () => {
             />
           </div>
           <div className="btn-group">
-              <button className="deliver" onClick={handleDeliverySubmit} >Proceed to Pay</button>
+              <button className="deliver primary-btn" onClick={handleDeliverySubmit} >Proceed to Pay</button>
             </div>
         </div>
       </div>
     </div>
+    <ToastContainer/>
         </>
     )
 }

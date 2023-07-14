@@ -14,7 +14,7 @@ const UserMenu = (props) => {
       key: "1",
       label: (
         <Link to={`/user/${props.user._id}`}>
-          <Button type="link">My Profile</Button>
+          <Button type="link" className="menu-btn" >My Profile</Button>
         </Link>
       ),
     },
@@ -22,14 +22,14 @@ const UserMenu = (props) => {
       key: "2",
       label: (
         <Link to={`/cart`}>
-          <Button type="link">My Cart</Button>
+          <Button type="link" className="menu-btn">My Cart</Button>
         </Link>
       ),
     },
     {
       key: "3",
       label: (
-        <Button type="link" onClick={logout} danger>
+        <Button type="link" onClick={logout} danger className="danger-menu-btn">
           Logout
         </Button>
       ),
