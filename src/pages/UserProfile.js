@@ -3,7 +3,7 @@ import profilethumb from "../assets/images/profile-user.png";
 import thumb from "../assets/images/thumbnail.jpg";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Button, Col, Empty, Form, Input, Row, Spin } from "antd";
+import { Button, Col, Empty, Form, Input, Modal, Spin } from "antd";
 import ProductCard from "../components/ProductCard";
 import { FormOutlined } from "@ant-design/icons";
 import { ToastContainer, toast } from "react-toastify";
@@ -22,6 +22,7 @@ const UserProfile = (props) => {
     password: "",
   });
   const [loading, setLoading] = useState(true);
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const token = localStorage.getItem("token");
   const publicFolder = "http://localhost:5000/image/";
 
@@ -64,10 +65,12 @@ const UserProfile = (props) => {
       fullname: userData.fullname,
       password: "",
     });
+    setIsModalVisible(true);
   };
 
   const handleCancelEdit = () => {
     setEditMode(false);
+    setIsModalVisible(false);
   };
 
   const handleInputChange = (e) => {
@@ -102,6 +105,7 @@ const UserProfile = (props) => {
         return { ...prevUserData, username: response.data.data.username };
       });      
       setEditMode(false);
+      setIsModalVisible(false);
       toast.success('Changed user details successfully')
     } catch (err) {
       console.error(err);
@@ -119,7 +123,7 @@ const UserProfile = (props) => {
       <div className="text-center">
         <h3 className="page-title">Profile Details</h3>
         {userData && (
-          <div className="user-info">
+          <div className="user-info user-form">
             <div className="user-info-data">
               <div className="profile-img">
                 <img
@@ -145,59 +149,6 @@ const UserProfile = (props) => {
                     </div>
                   </div>
                 </>
-              )}
-              {editMode && (
-                <Form onFinish={handleSubmit} className="user-form" layout="vertical">
-                  <Form.Item label="Profile Image">
-                    <div>
-                      <input type="file" id="image-upload" accept="image/*" onChange={handleImageChange} />
-                    </div>
-                    <div className="preview-container">
-                      {previewImage && <img src={previewImage} alt="Profile Thumbnail" />}
-                    </div>
-                  </Form.Item>
-                  <Form.Item label="Username" 
-                      rules={[
-                      {
-                        required: true,
-                        message: "Username is required",
-                      },
-                      {
-                        min: 5,
-                        message: "Username must be at least 5 characters long",
-                      },
-                    ]}>
-                    <Input
-                      name="username"
-                      value={updatedUserData.username}
-                      onChange={handleInputChange}
-                    />
-                  </Form.Item>
-                  <Form.Item label="Full Name">
-                    <Input
-                      name="fullname"
-                      value={updatedUserData.fullname}
-                      onChange={handleInputChange}
-                    />
-                  </Form.Item>
-                  <Form.Item label="Password">
-                    <Input.Password
-                      name="password"
-                      value={updatedUserData.password}
-                      onChange={handleInputChange}
-                    />
-                  </Form.Item>
-                  <div>
-                    <Button
-                      type="primary"
-                      htmlType="submit"
-                      style={{ marginRight: "10px" }}
-                    >
-                      Save
-                    </Button>
-                    <Button onClick={handleCancelEdit}>Cancel</Button>
-                  </div>
-                </Form>
               )}
             </div>
             <h3>My Orders</h3>
@@ -291,6 +242,72 @@ const UserProfile = (props) => {
           </div>
         )}
       </div>
+      <Modal
+        title="Edit Profile"
+        visible={isModalVisible}
+        onCancel={handleCancelEdit}
+        footer={null}
+      >
+        <Form onFinish={handleSubmit} layout="vertical">
+          <Form.Item label="Profile Image">
+            <div>
+              <input type="file" id="image-upload" accept="image/*" onChange={handleImageChange} />
+            </div>
+            <div className="preview-container">
+              {previewImage && <img src={previewImage} alt="Profile Thumbnail" />}
+            </div>
+          </Form.Item>
+          <Form.Item
+            label="Username"
+            rules={[
+              {
+                required: true,
+                message: "Username is required",
+              },
+              {
+                min: 5,
+                message: "Username must be at least 5 characters long",
+              },
+            ]}
+          >
+            <Input
+              name="username"
+              value={updatedUserData.username}
+              onChange={handleInputChange}
+            />
+          </Form.Item>
+          <Form.Item label="Full Name">
+            <Input
+              name="fullname"
+              value={updatedUserData.fullname}
+              onChange={handleInputChange}
+            />
+          </Form.Item>
+          <Form.Item label="Password">
+            <Input.Password
+              name="password"
+              value={updatedUserData.password}
+              onChange={handleInputChange}
+            />
+          </Form.Item>
+          <div>
+            <Button
+              className="primary-btn"
+              htmlType="submit"
+              style={{ marginRight: "10px" }}
+            >
+              Save
+            </Button>
+            <Button
+              className="clear-cart-button"
+              style={{ color: "white" }}
+              onClick={handleCancelEdit}
+            >
+              Cancel
+            </Button>
+          </div>
+        </Form>
+      </Modal>
       <ToastContainer/>
     </>
   );

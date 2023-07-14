@@ -680,6 +680,37 @@ width: 800px;
 }
 
 
+.payment-page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+}
+
+.payment-page-container h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.payment-page-container .btn-group {
+  display: flex;
+  align-items: center;
+}
+
+.payment-page-container .btn-group button {
+  margin: 0 10px;
+}
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+}
+
+.ant-pagination-item-active {
+  border-color: #227b37!important;
+}
+
 /* .ant-tabs-tab-active {
   color: #289A43!important;
 }

@@ -12,6 +12,7 @@ import {
     Popconfirm,
     Rate,
     Empty,
+    Pagination,
   } from "antd";
 import {
   MinusOutlined, PlusOutlined, StarOutlined,
@@ -31,6 +32,8 @@ const ProductPage = (props) => {
     const [quantity, setQuantity] = useState(1);
     const [reviews, setReviews] = useState([]);
     const [reviewPopupVisible, setReviewPopupVisible] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageSize, setPageSize] = useState(4);
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
     const {addToCart} = useContext(CartContext);
@@ -88,6 +91,49 @@ const ProductPage = (props) => {
       }
     };
 
+    const handleReviewPageChange = (page, pageSize) => {
+      setCurrentPage(page);
+    }
+
+    const renderReviews = () => {
+      const startIndex = (currentPage - 1) * pageSize;
+      const endIndex = startIndex + pageSize;
+      const paginatedReviews = reviews.slice(startIndex, endIndex);
+  
+      if (paginatedReviews.length > 0) {
+        return paginatedReviews.map((review) => (
+          <div className="review_container" key={review._id}>
+            <div className="review_star">
+              <div className="review_name">{review.reviewerName}</div>
+              <div>
+                <Rate
+                  allowHalf
+                  disabled
+                  value={review.rating}
+                  style={{ color: "#F49723" }}
+                />
+              </div>
+            </div>
+            <div className="review_body">{review.body}</div>
+          </div>
+        ));
+      } else {
+        return (
+          <Empty
+            image={Empty.PRESENTED_IMAGE_SIMPLE}
+            description={
+              <span style={{ color: "#888", fontWeight: "bold", fontSize: "18px" }}>
+                No reviews available
+              </span>
+            }
+            style={{
+              margin: "20px 0",
+            }}
+          />
+        );
+      }
+    };
+
     return (
         <>
           {product ? (
@@ -135,27 +181,16 @@ const ProductPage = (props) => {
                 <div className="blog-bottom">
                   <div className="blog-title-other">Reviews</div>
                   <div className="reviews-section">
-                    {reviews.length > 0 ? (
-                      reviews.map((review) => (
-                        <div className="review_container" key={review._id}>
-                          <div className="review_star">
-                            <div className="review_name">{review.reviewerName}</div>
-                            <div>
-                              <Rate allowHalf disabled value={review.rating} style={{ color: "#F49723" }} />
-                            </div>
-                          </div>
-                          <div className="review_body">{review.body}</div>
-                        </div>
-                      ))
-                    ) : (
-                      <Empty
-                        image={Empty.PRESENTED_IMAGE_SIMPLE}
-                        description={<span style={{ color: '#888', fontWeight: 'bold', fontSize: '18px' }}>No reviews available</span>}
-                        style={{
-                          margin: '20px 0',
-                        }}
+                    {renderReviews()}
+                    <div className="pagination-container">
+                      <Pagination 
+                      current={currentPage}
+                      total={reviews.length}
+                      pageSize={pageSize}
+                      onChange={handleReviewPageChange}
+                      style={{marginTop: "20px"}}
                       />
-                    )}
+                    </div>
                   </div>
                   <div className="blog-title-other">Other Products</div>
                     <div className="other-products-container">

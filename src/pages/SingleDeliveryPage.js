@@ -35,7 +35,7 @@ const SingleDeliveryPage = () => {
 
     const handleDeliverySubmit = () => {
       if (city && area && landmark && contact) {
-        if (contact.length === 9) {
+        if (contact.length === 10) {
           const deliveryData = {
             city,
             area,
@@ -59,7 +59,7 @@ const SingleDeliveryPage = () => {
             console.log(error);
           }
         } else {
-          toast.error('Contact number must be 9 characters long. ')
+          toast.error('Contact number must be 10 characters long. ')
           document.getElementById("contact").classList.add("invalid-field");
         }
       } else {

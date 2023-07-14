@@ -49,7 +49,7 @@ const ProductListTab = ({ products, handleEdit, handleDelete }) => {
           className="table-row"
           onClick={() => handleRowClick(record)}
         >
-          <img
+          <img  
             src={image ? publicFolder + image : thumb}
             alt="Product"
             style={{ width: "50px" }}
