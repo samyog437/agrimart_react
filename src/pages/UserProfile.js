@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import profilethumb from "../assets/images/profile-user.png";
 import thumb from "../assets/images/thumbnail.jpg";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Button, Col, Empty, Form, Input, Modal, Spin } from "antd";
+import { Button, Col, Empty, Form, Input, Modal, Spin, Pagination } from "antd";
 import ProductCard from "../components/ProductCard";
 import { FormOutlined } from "@ant-design/icons";
 import { ToastContainer, toast } from "react-toastify";
@@ -23,6 +23,8 @@ const UserProfile = (props) => {
   });
   const [loading, setLoading] = useState(true);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(3); // Number of orders to display per page
   const token = localStorage.getItem("token");
   const publicFolder = "http://localhost:5000/image/";
 
@@ -118,6 +120,30 @@ const UserProfile = (props) => {
     e.target.src = thumb;
   };
 
+  const handlePageChange = (page, pageSize) => {
+    setCurrentPage(page);
+  };
+
+  const getOrderList = () => {
+    if (userData && userData.deliveries) {
+      const startIndex = (currentPage - 1) * pageSize;
+      const endIndex = startIndex + pageSize;
+      return userData.deliveries.slice(startIndex, endIndex);
+    }
+    return [];
+  };
+
+  const getStatusStyle = (status) => {
+    switch (status) {
+      case "Delivered":
+        return { backgroundColor: "green", color: "white" };
+      case "Ongoing":
+        return { backgroundColor: "yellow", color: "black" };
+      default:
+        return { backgroundColor: "transparent", color: "black" };
+    }
+  };
+
   return (
     <>
       <div className="text-center">
@@ -156,8 +182,8 @@ const UserProfile = (props) => {
               <div className="cart-body order-body">
                 {loading ? (
                   <Spin size="large" /> // Display spinner while loading
-                ) : userData.deliveries && userData.deliveries.length > 0 ? (
-                  userData.deliveries.map((delivery) => (
+                ) : getOrderList().length > 0 ? (
+                  getOrderList().map((delivery) => (
                     <div className="cart-list" key={delivery._id}>
                       <div className="order-item-parent">
                         {delivery.products.map((product, index) => (
@@ -197,20 +223,25 @@ const UserProfile = (props) => {
                           </>
                         ))}
                       </div>
+                      <div
+                        className="status vertical-center"
+                        style={getStatusStyle(delivery.deliveryStatus)}
+                      >
+                        {delivery.deliveryStatus}
+                      </div>
                       <div className="order-item-parent">
                         {delivery.products.map((product) => (
                           <div className="cart-item" key={product._id}>
-                            <div className="cart-item-right order-item-right">
-                              Rs.
+                            <div className="cart-item-right order-item-right" style={{fontSize: "20px", fontWeight: 500}}>
+                              <span style={{fontSize: "16px"}}>Rs.</span>
                               {product.productId
                                 ? product.productId.price
                                 : "N/A"}
                             </div>
                           </div>
                         ))}
-
-                        <div className="total-price">
-                          Total Price: Rs.{delivery.totalPrice}
+                        <div className="total-price" style={{color: "red"}}>
+                          Total: Rs.{delivery.totalPrice}
                         </div>
                       </div>
                     </div>
@@ -225,6 +256,14 @@ const UserProfile = (props) => {
                   />
                 )}
               </div>
+            </div>
+            <div className="pagination-container">
+              <Pagination
+                current={currentPage}
+                pageSize={pageSize}
+                total={userData.deliveries ? userData.deliveries.length : 0}
+                onChange={handlePageChange}
+              />
             </div>
             <div className="go-back-button">
               <Button

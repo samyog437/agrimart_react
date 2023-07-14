@@ -13,6 +13,7 @@ import {
     Rate,
     Empty,
     Pagination,
+    Modal,
   } from "antd";
 import {
   MinusOutlined, PlusOutlined, StarOutlined,
@@ -21,9 +22,10 @@ import ProductCard from "../components/ProductCard";
 import thumb from "../assets/images/thumbnail.jpg";
 import Review from "../components/Review";
 import { CartContext } from "../components/CartContext";
+import { ToastContainer, toast } from "react-toastify";
 
 
-const ProductPage = (props) => {
+const ProductPage = ({user}) => {
     const location = useLocation();
     const path = location.pathname.split("/")[2];
     const publicFolder = "http://localhost:5000/image/"
@@ -32,11 +34,17 @@ const ProductPage = (props) => {
     const [quantity, setQuantity] = useState(1);
     const [reviews, setReviews] = useState([]);
     const [reviewPopupVisible, setReviewPopupVisible] = useState(false);
+    const [deleteModalVisible, setDeleteModalVisible] = useState(false)
+    const [selectedReviewId, setSelectedReviewId] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [pageSize, setPageSize] = useState(4);
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
     const {addToCart} = useContext(CartContext);
+    const config = { headers: { Authorization: `Bearer ${token}` } };
+
+    const revUserId = localStorage.getItem("userId");
+    const revAdmin = user && user.role === "Admin";
 
     useEffect(() => {
         const getProduct = async () => {
@@ -95,13 +103,38 @@ const ProductPage = (props) => {
       setCurrentPage(page);
     }
 
+    const handleDeleteReview = async (reviewId) => {
+      setSelectedReviewId(reviewId);
+      setDeleteModalVisible(true);
+    };
+
+    const handleConfirmDeleteReview = async () => {
+      try {
+        await axios.delete(`/products/${product._id}/reviews/${selectedReviewId}`, config);
+        setReviews(reviews.filter((review) => review._id !== selectedReviewId));
+        setDeleteModalVisible(false);
+        setSelectedReviewId(null);
+        toast.success('Review deleted successfully');
+      } catch (error) {
+        console.error(error);
+        toast.error('Failed to delete the review');
+      }
+    };
+    
+    const handleCancelDeleteReview = () => {
+      setDeleteModalVisible(false);
+      setSelectedReviewId(null);
+    };
+    
+    
+
     const renderReviews = () => {
       const startIndex = (currentPage - 1) * pageSize;
       const endIndex = startIndex + pageSize;
       const paginatedReviews = reviews.slice(startIndex, endIndex);
   
       if (paginatedReviews.length > 0) {
-        return paginatedReviews.map((review) => (
+        return paginatedReviews.map((review, index) => (
           <div className="review_container" key={review._id}>
             <div className="review_star">
               <div className="review_name">{review.reviewerName}</div>
@@ -110,11 +143,19 @@ const ProductPage = (props) => {
                   allowHalf
                   disabled
                   value={review.rating}
-                  style={{ color: "#F49723" }}
+                  style={{ color: "#F49723", fontSize: "16px" }}
                 />
               </div>
             </div>
-            <div className="review_body">{review.body}</div>
+            <div className="review_body">
+              {review.body}
+              {(review.reviewer_id === revUserId || token.role === revAdmin) && (
+              <div className="review_actions">
+                  <Button onClick={() => handleDeleteReview(review._id)} className="delete_button" danger>Delete</Button>
+              </div>
+            )}
+                </div>
+          {index !== paginatedReviews.length - 1 && <hr className="review_line" />}
           </div>
         ));
       } else {
@@ -215,7 +256,20 @@ const ProductPage = (props) => {
               <Spin size="large" />
             </div>
           )}
+          <Modal
+            title="Confirm Delete"
+            visible={deleteModalVisible}
+            onOk={handleConfirmDeleteReview}
+            onCancel={handleCancelDeleteReview}
+            style={{ top: "50%", transform: "translateY(-50%)" }}
+            okButtonProps={{ className: "ok-button" }}
+            cancelButtonProps={{ className: "delete-button" }}
+          >
+            <p>Are you sure you want to delete this review?</p>
+          </Modal>
+
           <Review visible={reviewPopupVisible} onCancel={() => setReviewPopupVisible(false)} token={token} />
+          <ToastContainer/>
         </>
       );
 }

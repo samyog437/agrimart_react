@@ -52,9 +52,9 @@ const PaymentPage = () => {
                 </Button>
               </div>
             </div>
-            <div className="payment-page-container">
+            <div className="payment-page-container user-form" style={{width: "50%"}}>
                   <div className="btn-group">
-                    <button onClick={handleOrder}>Cash on Delivery</button>
+                    <button className="primary-btn" onClick={handleOrder}>Cash on Delivery</button>
                     {/* <h5>or</h5>
                     <button onClick={() => checkout.show({ amount: 1000 })}>Khalti</button> */}
                 </div>

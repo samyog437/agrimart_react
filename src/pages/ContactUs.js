@@ -7,8 +7,8 @@ const ContactUs = () => {
         <div className="contact-us-container">
       <p className="contact-us-text">
         If you have any <strong className="contact-us-strong">questions</strong>,
-        <strong className="contact-us-strong">feedback</strong>, or
-        <strong className="contact-us-strong">inquiries</strong>, please feel free to reach out to us. Our dedicated team is here to assist you.
+        <strong className="contact-us-strong"> feedback</strong>, or
+        <strong className="contact-us-strong"> inquiries</strong>, please feel free to reach out to us. Our dedicated team is here to assist you.
       </p>
       <p className="contact-us-methods">
         You can contact us through the following methods:
@@ -26,7 +26,7 @@ const ContactUs = () => {
       </p>
       <p className="contact-us-feedback">
         We value your <strong className="contact-us-strong">feedback</strong> and
-        <strong className="contact-us-strong">suggestions</strong>. Let us know how we can serve you better.
+        <strong className="contact-us-strong"> suggestions</strong>. Let us know how we can serve you better.
       </p>
     </div>
     </div>

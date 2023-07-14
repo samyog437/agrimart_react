@@ -69,7 +69,11 @@ const AllVegetables = () => {
   } else if (sortOption === "uploadDate") {
     sortedProducts.sort(
       (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-    );
+    ) 
+  } else if (sortOption === "priceLowToHigh") {
+    sortedProducts.sort((a, b) => a.price - b.price);
+  } else if (sortOption === "priceHighToLow") {
+    sortedProducts.sort((a, b) => b.price - a.price);
   }
 
   const rows = [];
@@ -103,6 +107,8 @@ const AllVegetables = () => {
               <Option value="">Sort By</Option>
               <Option value="purchaseCount">Popularity</Option>
               <Option value="uploadDate">Upload Date</Option>
+              <Option value="priceLowToHigh">Price(Low to High)</Option>
+              <Option value="priceHighToLow">Price(High to Low)</Option>
             </Select>
           </div>
         </div>
