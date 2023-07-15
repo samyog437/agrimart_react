@@ -22,7 +22,9 @@ const Review = ({ visible, onCancel, token }) => {
       };
       await axios.post(`/products/${path}/reviews`, newReview, config);
       toast.success("Review submitted successfully");
-      window.location.replace(`/products/${path}`);
+      setTimeout(() => {
+        window.location.replace(`/products/${path}`);
+      }, 2000);
     } catch (error) {
       console.error("Failed to submit review:", error);
       toast.error("Failed to submit review. Please try again later.");

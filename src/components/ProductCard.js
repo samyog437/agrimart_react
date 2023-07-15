@@ -33,6 +33,7 @@ const ProductCard = (props) => {
                   color: "#F49723",
                   fontSize: "16px"
                   }} />
+                  {averageRating > 0 && <span className="rating-count" style={{fontSize: "16px", marginLeft: "0.5rem"}}>({props.data.reviews.length})</span>}
               </div>
             </>
           }

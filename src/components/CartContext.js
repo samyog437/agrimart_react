@@ -42,9 +42,23 @@ const CartProvider = ({ children }) => {
     persistCartItems([]);
   };
 
+  const updateCartItemQuantity = (productId, quantity) => {
+    const updatedCartItems = cartItems.map((item) => {
+      if (item.id === productId) {
+        return {
+          ...item,
+          quantity: item.quantity + quantity,
+        };
+      }
+      return item;
+    });
+    persistCartItems(updatedCartItems);
+  };
+  
+
   return (
     <CartContext.Provider
-      value={{ cartItems, addToCart, removeFromCart, clearCart }}
+      value={{ cartItems, addToCart, removeFromCart, clearCart, updateCartItemQuantity }}
     >
       {children}
     </CartContext.Provider>

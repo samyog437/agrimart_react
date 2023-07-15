@@ -191,11 +191,12 @@ const UserProfile = (props) => {
           <div className="user-info user-form">
             <div className="user-info-data">
               <div className="profile-img">
-                <img
-                  src={userData.image ? publicFolder + userData.image : thumb}
-                  onError={handleImageError}
-                  alt="Profile"
-                />
+              <img
+                src={userData.image ? `${publicFolder}${userData.image}` : thumb}
+                onError={handleImageError}
+                alt="Profile"
+              />
+
               </div>
               {!editMode && (
                 <>
@@ -258,6 +259,7 @@ const UserProfile = (props) => {
                                 {product.productId && (
                                   <div className="cart-name">
                                     {product.productId.title}
+                                    ({product.quantity}kg)
                                   </div>
                                 )}
                               </div>

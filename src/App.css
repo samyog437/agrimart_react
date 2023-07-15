@@ -700,10 +700,19 @@ width: 800px;
 
 .payment-page-container {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 60vh;
+  width: 50%;
+}
+
+.payment-btns {
+  display: flex;
+  flex-direction: row;
+}
+
+.cash-on-dv button{
+  width: 15rem!important;
 }
 
 .payment-page-container h2 {
@@ -767,6 +776,14 @@ width: 800px;
 
   .blog-bottom {
     margin: 0;
+  }
+
+  .ant-tabs-nav-list {
+    margin-left: 2rem!important;
+  }
+
+  .tabs-parent {
+    padding: 0!important;
   }
 }
 

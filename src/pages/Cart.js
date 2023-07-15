@@ -1,14 +1,14 @@
 import React, { useContext, useState } from "react";
 import { CartContext } from "../components/CartContext";
 import thumb from "../assets/images/thumbnail.jpg";
-import { ArrowDownOutlined, ArrowLeftOutlined, DeleteOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
+import { ArrowDownOutlined, ArrowLeftOutlined, DeleteOutlined, ExclamationCircleOutlined, MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { Modal, Button, Empty } from "antd";
 
 const { confirm } = Modal;
 
 const Cart = () => {
-  const { cartItems, removeFromCart, clearCart } = useContext(CartContext);
+  const { cartItems, removeFromCart, clearCart, updateCartItemQuantity } = useContext(CartContext);
   const publicFolder = "http://localhost:5000/image/";
   const navigate = useNavigate();
   const [clearCartModalVisible, setClearCartModalVisible] = useState(false);
@@ -51,7 +51,6 @@ const Cart = () => {
       },
     });
   };
-  
 
   // Calculate the total of the cart
   const calculateTotal = () => {
@@ -66,21 +65,34 @@ const Cart = () => {
     navigate(-1); // Navigate back to the previous page
   };
 
+  const increaseQuantity = (productId) => {
+    updateCartItemQuantity(productId, 1);
+  };
+
+  const decreaseQuantity = (productId) => {
+    const item = cartItems.find((item) => item.id === productId);
+    if (item.quantity === 1) {
+      return; // Quantity is already 1, no further decrease allowed
+    }
+    updateCartItemQuantity(productId, -1);
+  };
+  
+
   return (
     <div className="text-center">
       <h3 style={{ marginTop: "2rem" }}>My Cart</h3>
       <div className="sort-class-parent">
-            <div className="sort-class">
-            <Button
+        <div className="sort-class">
+          <Button
             danger
-              icon={<ArrowLeftOutlined />}
-                style={{ marginBottom: "1rem"}}
-                onClick={handleGoBack}
-              >
-                Back
-              </Button>
-              </div>
-          </div>
+            icon={<ArrowLeftOutlined />}
+            style={{ marginBottom: "1rem" }}
+            onClick={handleGoBack}
+          >
+            Back
+          </Button>
+        </div>
+      </div>
       <div className="cart-content">
         <div className="cart-body">
           {cartItems.length > 0 ? (
@@ -101,8 +113,29 @@ const Cart = () => {
                     <div className="cart-name">{product.name}</div>
                   </div>
                   <div className="cart-item-right">
-                    <div className="cart-price">{product.quantity} kg</div>
-                    <div className="cart-price">Rs.{product.price}</div>
+                    {/* <div className="cart-quantity">
+                      <button
+                        className="quantity-button"
+                        onClick={() => decreaseQuantity(product.id)}
+                      >
+                        -
+                      </button>
+                      <div className="cart-price">{product.quantity} kg</div>
+                      <button
+                        className="quantity-button"
+                        onClick={() => increaseQuantity(product.id)}
+                      >
+                        +
+                      </button>
+                    </div> */}
+                    <div className="increment-row" style={{paddingRight: "2rem"}}>
+                      <div className="increment-btn">
+                        <MinusOutlined onClick={() => decreaseQuantity(product.id)} />
+                        <span>{product.quantity} kg</span>
+                        <PlusOutlined onClick={() => increaseQuantity(product.id)} />
+                      </div>
+                    </div>
+                    <div className="cart-price">Rs.{product.price * product.quantity}</div>
                     <DeleteOutlined
                       className="delete-icon"
                       onClick={() => showDeleteConfirmation(product.id)}
@@ -114,15 +147,15 @@ const Cart = () => {
             </div>
           ) : (
             <Empty
-                image={Empty.PRESENTED_IMAGE_SIMPLE}
-                description={<span style={{ color: '#888', fontWeight: 'bold', fontSize: '18px' }}>No items in your cart</span>}
-                style={{
+              image={Empty.PRESENTED_IMAGE_SIMPLE}
+              description={<span style={{ color: '#888', fontWeight: 'bold', fontSize: '18px' }}>No items in your cart</span>}
+              style={{
                 margin: '20px 0',
-                display: "flex", 
-                justifyContent: "center", 
+                display: "flex",
+                justifyContent: "center",
                 alignItems: "center",
                 minHeight: "300px"
-                }}
+              }}
             />
           )}
           {cartItems.length > 0 && (
@@ -149,7 +182,7 @@ const Cart = () => {
         okButtonProps={{ className: "ok-button" }}
         cancelButtonProps={{ className: "delete-button" }}
         footer={[
-        <Button
+          <Button
             key="cancel"
             onClick={handleCancelClearCart}
             className="delete-button"
@@ -166,9 +199,9 @@ const Cart = () => {
             Clear
           </Button>,
         ]}
-        >
-          <p>Are you sure you want to clear your cart?</p>
-        </Modal>
+      >
+        <p>Are you sure you want to clear your cart?</p>
+      </Modal>
     </div>
   );
 };

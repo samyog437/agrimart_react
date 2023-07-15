@@ -250,7 +250,7 @@ const AdminPage = (props) => {
   return (
     <>
     <h3 className="text-center page-title">Admin Dashboard</h3>
-      <div style={{ padding: "20px 100px" }}>
+      <div className="tabs-parent" style={{ padding: "20px 100px" }}>
         <Tabs defaultActiveKey="1" activeTabClassName="custom-active-tab">
           <TabPane tab="Add Product" key="1">
             <AddProductTab

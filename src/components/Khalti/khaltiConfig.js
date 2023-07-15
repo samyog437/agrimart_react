@@ -1,20 +1,37 @@
+import axios from 'axios';
 import myKey from './khaltiKey'
+import { useNavigate } from 'react-router-dom';
  
 
 let khaltiConfig = {
     // replace this key with yours
     "publicKey": myKey.publicTestKey,
-    "productIdentity": "64af6372d9792b625cdbb9e3",
-    "productName": "My store",
-    "productUrl": "http://localhost:3000/products/64af6372d9792b625cdbb9e3",
+    "productIdentity": "1234567890",
+    "productName": "Drogon",
+    "productUrl": "http://gameofthrones.com/buy/Dragons",
     "eventHandler": {
         onSuccess (payload) {
             // hit merchant api for initiating verfication
             console.log(payload);
+            let data = {
+                "token": payload.token,
+                "amount": payload.amount,
+            };
+            let config = {
+                headers: {"Authorization": myKey.secretKey}
+            };
+            axios.post("http://localhost:5000/user/khalti", data, config)
+            .then(response => {
+                console.log(response.data);
+                
+            })
+            .catch(error=> {
+                console.log(error)
+            });
         },
         // onError handler is optional
         onError (error) {
-            // handle errors
+            // handle errors    
             console.log(error);
         },
         onClose () {

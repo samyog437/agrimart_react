@@ -40,6 +40,25 @@ const PaymentPage = () => {
     const handleGoBack = () => {
       navigate('/');
     }
+
+    const onKhalti = () => {
+      checkout.show({ amount: deliveryData.totalPrice * 100 }, async(payload) => {
+        try {
+          await axios.post(`/delivery`, deliveryData, config);
+          sessionStorage.removeItem("productId");
+          sessionStorage.removeItem("deliveryData");
+          toast.success("Order placed successfully");
+          setTimeout(() => {
+            navigate(`/user/${userId}`);
+          }, 2000);
+        } catch (error) {
+          console.log("Error placing order:", error);
+          sessionStorage.removeItem("productId");
+          sessionStorage.removeItem("deliveryData");
+          toast.error("Failed to place order");
+        }
+      });
+    }
       
     return (
         <>  
@@ -52,11 +71,11 @@ const PaymentPage = () => {
                 </Button>
               </div>
             </div>
-            <div className="payment-page-container user-form" style={{width: "50%"}}>
-                  <div className="btn-group">
-                    <button className="primary-btn" onClick={handleOrder}>Cash on Delivery</button>
-                    {/* <h5>or</h5>
-                    <button onClick={() => checkout.show({ amount: 1000 })}>Khalti</button> */}
+            <div className="payment-page-container user-form">
+                  <div className="btn-group payment-btns">
+                    <button className="cash-on-dv" style={{backgroundColor: "#F29930", width: "12rem"}} onClick={handleOrder}>Cash on Delivery</button>
+                    <h5 style={{margin: "2rem"}}>or</h5>
+                    <button style={{backgroundColor: "#5c2d95"}} onClick={onKhalti}>Khalti</button>
                 </div>
               </div>
           </div>

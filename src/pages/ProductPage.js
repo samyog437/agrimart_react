@@ -161,7 +161,7 @@ const ProductPage = ({user}) => {
             </div>
             <div className="review_body">
               {review.body}
-              {(review.reviewer_id === revUserId || (token && token.role === revAdmin)) && (
+              {(review.reviewer_id === revUserId || revAdmin) && (
               <div className="review_actions">
                   <Button onClick={() => handleDeleteReview(review._id)} className="delete_button" danger>Delete</Button>
               </div>
@@ -223,7 +223,10 @@ const ProductPage = ({user}) => {
                         <PlusOutlined onClick={increaseQuantity} />
                       </div>
                     </div>
-                    <button className="rate-btn" onClick={() => setReviewPopupVisible(true)}>Rate <StarOutlined style={{color:'white'}} /></button>
+                    <div className="rating-count">
+                        <button className="rate-btn" onClick={() => setReviewPopupVisible(true)}>Rate <StarOutlined style={{color:'white'}} /></button>
+                        <span style={{marginLeft: "2rem"}}>{product.reviews.length} ratings</span>
+                    </div>
                     <div className="btn-group shop">
                       <button onClick={handleBuyNow}>Buy Now</button>
                       <button onClick={handleCart}>Add to Cart</button>

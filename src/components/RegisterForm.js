@@ -91,13 +91,15 @@ const RegisterForm = () => {
       password,
       image,
     };
+    
+    console.log(user)
 
     try {
       await axios.post("/user/", user);
       toast.success("User Registered Successfully");
       setTimeout(() => {
         window.location.replace("/login");
-      }, 500);
+      }, 2000);
     } catch (error) {
       if (
         error.response &&
@@ -171,7 +173,7 @@ const RegisterForm = () => {
             onChange={handleConfirmPasswordChange}
           />
         </div>
-        <div className="form-group">
+        {/* <div className="form-group">
           <label htmlFor="image-upload">Profile Picture</label>
           <input
             type="file"
@@ -182,7 +184,7 @@ const RegisterForm = () => {
           <div className="preview-container">
             {previewImage && <img src={previewImage} alt="Blog Thumbnail" />}
           </div>
-        </div>
+        </div> */}
         <div className="btn-group">
           <button onClick={onSubmit} className="primary-btn">
             Register

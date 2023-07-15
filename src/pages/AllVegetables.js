@@ -12,7 +12,7 @@ const AllVegetables = () => {
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [productsPerPage] = useState(9);
+  const [productsPerPage] = useState(6);
   const [sortOption, setSortOption] = useState("");
   const [loading, setLoading] = useState(true);
   const location = useLocation();
@@ -48,37 +48,38 @@ const AllVegetables = () => {
     setSortOption(value);
   };
 
-  const indexOfLastProduct = currentPage * productsPerPage;
-  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = products.slice(
-    indexOfFirstProduct,
-    indexOfLastProduct
-  );
-
   const handleChangePage = (page) => setCurrentPage(page);
 
-  const filteredProducts = currentProducts.filter((product) => {
+  const filteredProducts = products.filter((product) => {
     const productName = product.title.toLowerCase();
     const searchTerms = searchTerm.toLowerCase();
     return productName.includes(searchTerms);
   });
 
-  let sortedProducts = [...filteredProducts];
+  let currentProducts = [...filteredProducts];
+
   if (sortOption === "purchaseCount") {
-    sortedProducts.sort((a, b) => b.purchaseCount - a.purchaseCount);
+    currentProducts.sort((a, b) => b.purchaseCount - a.purchaseCount);
   } else if (sortOption === "uploadDate") {
-    sortedProducts.sort(
+    currentProducts.sort(
       (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-    ) 
+    );
   } else if (sortOption === "priceLowToHigh") {
-    sortedProducts.sort((a, b) => a.price - b.price);
+    currentProducts.sort((a, b) => a.price - b.price);
   } else if (sortOption === "priceHighToLow") {
-    sortedProducts.sort((a, b) => b.price - a.price);
+    currentProducts.sort((a, b) => b.price - a.price);
   }
 
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  currentProducts = currentProducts.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
+
   const rows = [];
-  for (let i = 0; i < sortedProducts.length; i += 3) {
-    const rowProducts = sortedProducts.slice(i, i + 3);
+  for (let i = 0; i < currentProducts.length; i += 3) {
+    const rowProducts = currentProducts.slice(i, i + 3);
     rows.push(rowProducts);
   }
 
@@ -115,20 +116,24 @@ const AllVegetables = () => {
         <div className="all-row-parent">
           {loading ? (
             <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              marginRight: "30rem"
-            }}
-          >
-            <Spin size="large" />
-          </div>
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                marginRight: "30rem",
+              }}
+            >
+              <Spin size="large" />
+            </div>
           ) : rows.length > 0 ? (
             rows.map((row, rowIndex) => (
               <Row className="all-row" gutter={[16, 24]} key={rowIndex}>
                 {row.map((product) => (
-                  <Col span={4} className="card-col all-card" key={product._id}>
+                  <Col
+                    span={4}
+                    className="card-col all-card"
+                    key={product._id}
+                  >
                     <ProductCard data={product} />
                   </Col>
                 ))}
@@ -137,12 +142,16 @@ const AllVegetables = () => {
           ) : (
             <Empty
               image={Empty.PRESENTED_IMAGE_SIMPLE}
-              description={<span style={{ color: '#888', fontWeight: 'bold', fontSize: '18px' }}>No products found</span>}
+              description={
+                <span style={{ color: "#888", fontWeight: "bold", fontSize: "18px" }}>
+                  No products found
+                </span>
+              }
               style={{
-                margin: '20px 30rem 0 0',
+                margin: "20px 30rem 0 0",
               }}
-          />
-          )}  
+            />
+          )}
         </div>
         <Pagination
           current={currentPage}

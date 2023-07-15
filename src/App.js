@@ -19,6 +19,7 @@ import UserProfile from "./pages/UserProfile";
 import AdminPage from "./pages/admin/admin";
 import AboutUs from "./pages/AboutUs";
 import ContactUs from "./pages/ContactUs";
+import { Footer } from "antd/es/layout/layout";
 
 function App() {
   const [userId, setUserId] = useState();
@@ -67,6 +68,7 @@ function App() {
           <Route path="/contact-us" element={<ContactUs/>}/>
         </Routes>
       </Container>
+      <Footer/>
       </BrowserRouter>
     </Fragment>
   )
