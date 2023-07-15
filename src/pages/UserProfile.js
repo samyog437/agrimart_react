@@ -23,6 +23,7 @@ const UserProfile = (props) => {
   });
   const [loading, setLoading] = useState(true);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [passwordModalVisible, setPasswordModalVisible] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(3); // Number of orders to display per page
   const token = localStorage.getItem("token");
@@ -65,7 +66,6 @@ const UserProfile = (props) => {
     setUpdatedUserData({
       username: userData.username,
       fullname: userData.fullname,
-      password: "",
     });
     setIsModalVisible(true);
   };
@@ -100,7 +100,6 @@ const UserProfile = (props) => {
       }
       formData.append("username", updatedUserData.username);
       formData.append("fullname", updatedUserData.fullname);
-      formData.append("password", updatedUserData.password);
 
       const response = await axios.put(`/user/${path}`, formData, config);
       setUserData((prevUserData) => {
@@ -126,9 +125,12 @@ const UserProfile = (props) => {
 
   const getOrderList = () => {
     if (userData && userData.deliveries) {
+      const sortedDeliveries = [...userData.deliveries].sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      );
       const startIndex = (currentPage - 1) * pageSize;
       const endIndex = startIndex + pageSize;
-      return userData.deliveries.slice(startIndex, endIndex);
+      return sortedDeliveries.slice(startIndex, endIndex);
     }
     return [];
   };
@@ -141,6 +143,43 @@ const UserProfile = (props) => {
         return { backgroundColor: "yellow", color: "black" };
       default:
         return { backgroundColor: "transparent", color: "black" };
+    }
+  };
+
+  const handleChangePassword = () => {
+    setPasswordModalVisible(true);
+  };
+
+  const handleCancelPasswordChange = () => {
+    setPasswordModalVisible(false);
+  };
+
+  const handleChangePasswordSubmit = async (values) => {
+    const { currentPassword, newPassword, confirmNewPassword } = values;
+
+    if (!currentPassword || !newPassword || !confirmNewPassword) {
+      // Display an error message or perform any desired action
+      toast.error("Please fill in all the fields.");
+      if (!currentPassword)
+        document.getElementById("currentPassword").classList.add("invalid-field");
+      if (!newPassword)
+        document.getElementById("newPassword").classList.add("invalid-field");
+      if (!confirmNewPassword)
+        document.getElementById("confirmNewPassword").classList.add("invalid-field");
+      return;
+    }
+
+    try {
+      const response = await axios.put(`/user/${path}/update-password`, values, config);
+      toast.success(response.data.message);
+      setIsModalVisible(false);
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error('Failed to change password');
+      }
+      console.error(error);
     }
   };
 
@@ -173,6 +212,12 @@ const UserProfile = (props) => {
                         <span>{userData.email}</span>
                       </div>
                     </div>
+                  </div>
+                  <div className="btn-group" style={{marginBottom: "2rem"}}>
+                    <button className="primary-btn" onClick={handleChangePassword} 
+                      style={{padding: "10px 5px", width: "12rem"}}>
+                      Update Password
+                    </button>
                   </div>
                 </>
               )}
@@ -322,13 +367,6 @@ const UserProfile = (props) => {
               onChange={handleInputChange}
             />
           </Form.Item>
-          <Form.Item label="Password">
-            <Input.Password
-              name="password"
-              value={updatedUserData.password}
-              onChange={handleInputChange}
-            />
-          </Form.Item>
           <div>
             <Button
               className="primary-btn"
@@ -341,6 +379,72 @@ const UserProfile = (props) => {
               className="clear-cart-button"
               style={{ color: "white" }}
               onClick={handleCancelEdit}
+            >
+              Cancel
+            </Button>
+          </div>
+        </Form>
+      </Modal>
+      <Modal
+        title="Change Password"
+        visible={passwordModalVisible}
+        onCancel={handleCancelPasswordChange}
+        footer={null}
+      >
+        {/* Add the form for changing the password */}
+        <Form onFinish={handleChangePasswordSubmit} layout="vertical">
+          <Form.Item
+            label="Current Password"
+            name="currentPassword"
+            id="currentPassword"
+          >
+            <Input.Password className="cur-password" />
+          </Form.Item>
+          <Form.Item
+            label="New Password"
+            name="newPassword"
+            id="newPassword"
+            rules={[
+              {
+                min: 8,
+                message: "Password must be at least 8 characters long",
+              },
+            ]}
+          >
+            <Input.Password className="cur-password"/>
+          </Form.Item>
+          <Form.Item
+            label="Confirm New Password"
+            name="confirmNewPassword"
+            dependencies={["newPassword"]}
+            id="confirmNewPassword"
+            rules={[
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue("newPassword") === value) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(
+                    new Error("The two passwords do not match")
+                  );
+                },
+              }),
+            ]}
+          >
+            <Input.Password className="cur-password"/>
+          </Form.Item>
+          <div>
+            <Button
+              className="primary-btn"
+              htmlType="submit"
+              style={{ marginRight: "10px" }}
+            >
+              Change Password
+            </Button>
+            <Button
+              className="clear-cart-button"
+              style={{ color: "white" }}
+              onClick={handleCancelPasswordChange}
             >
               Cancel
             </Button>

@@ -119,7 +119,7 @@ const AllVegetables = () => {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              height: "100vh",
+              marginRight: "30rem"
             }}
           >
             <Spin size="large" />
@@ -139,10 +139,10 @@ const AllVegetables = () => {
               image={Empty.PRESENTED_IMAGE_SIMPLE}
               description={<span style={{ color: '#888', fontWeight: 'bold', fontSize: '18px' }}>No products found</span>}
               style={{
-                margin: '20px 0',
+                margin: '20px 30rem 0 0',
               }}
           />
-          )}
+          )}  
         </div>
         <Pagination
           current={currentPage}

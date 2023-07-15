@@ -16,6 +16,8 @@ import {
     Modal,
   } from "antd";
 import {
+  DeleteOutlined,
+  ExclamationCircleFilled,
   MinusOutlined, PlusOutlined, StarOutlined,
 } from "@ant-design/icons"
 import ProductCard from "../components/ProductCard";
@@ -126,6 +128,16 @@ const ProductPage = ({user}) => {
       setSelectedReviewId(null);
     };
     
+
+    const handleDeleteConfirm = () => {
+      handleConfirmDeleteReview();
+      setDeleteModalVisible(false);
+    };
+  
+    const handleDeleteCancel = () => {
+      setDeleteModalVisible(false);
+    };
+    
     
 
     const renderReviews = () => {
@@ -149,7 +161,7 @@ const ProductPage = ({user}) => {
             </div>
             <div className="review_body">
               {review.body}
-              {(review.reviewer_id === revUserId || token.role === revAdmin) && (
+              {(review.reviewer_id === revUserId || (token && token.role === revAdmin)) && (
               <div className="review_actions">
                   <Button onClick={() => handleDeleteReview(review._id)} className="delete_button" danger>Delete</Button>
               </div>
@@ -264,6 +276,20 @@ const ProductPage = ({user}) => {
             style={{ top: "50%", transform: "translateY(-50%)" }}
             okButtonProps={{ className: "ok-button" }}
             cancelButtonProps={{ className: "delete-button" }}
+            footer={[
+              <Button
+                key="cancel"
+                onClick={handleDeleteCancel}
+                className="delete-button"
+              >
+                <DeleteOutlined />
+                Cancel
+              </Button>,
+              <Button key="ok" onClick={handleDeleteConfirm} className="ok-button">
+                <ExclamationCircleFilled />
+                Delete
+              </Button>,
+            ]}
           >
             <p>Are you sure you want to delete this review?</p>
           </Modal>

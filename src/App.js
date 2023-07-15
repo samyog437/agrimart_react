@@ -56,9 +56,9 @@ function App() {
           <Route path="/cart" element={<Cart/>} />
           <Route path="/products" element={<AllVegetables/>}/>  
           <Route path="/products/:products_id" element={<ProductPage/>} user={user}/>
-          <Route path="/delivery" element={<DeliveryPage/>} />
-          <Route path="/buy-now/delivery" element={<SingleDeliveryPage/>} />
-          <Route path="/delivery/payment" element={<PaymentPage/>} />
+          <Route path="/delivery" element={userId ? <DeliveryPage user_id={userId} token={token}/> : <Login/>} />
+          <Route path="/buy-now/delivery" element={userId? <SingleDeliveryPage user_id={userId} token={token}/> : <Login/>} />
+          <Route path="/delivery/payment" element={userId? <PaymentPage/> : <Login/>} />
           <Route path="/user/:user_id" element={<UserProfile user={user} token={token} orders={orders} />} />
           <Route path="/admin" element={isAdmin ? <AdminPage user={user} token={token}/> : <Login/>} />
           <Route path="/login" element={userId ? <Dashboard/> : <Login/>}/>

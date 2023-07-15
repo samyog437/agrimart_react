@@ -735,6 +735,19 @@ width: 800px;
   padding: 5px;
 }
 
+.ant-input-affix-wrapper.cur-password {
+  padding: 0;
+}
+
+.ant-input-affix-wrapper > input {
+  font-size: 16px;
+  padding: 10px 2px!important;
+}
+
+.ant-input-suffix {
+  padding-right: 2px!important;
+}
+
 @media screen and (max-width: 1230px) {
   .sort-class-parent {
     display: inline-flex;

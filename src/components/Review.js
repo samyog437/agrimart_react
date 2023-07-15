@@ -2,6 +2,7 @@ import { Modal, Rate, Form, Input, Button, Alert } from "antd";
 import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
 
 const Review = ({ visible, onCancel, token }) => {
   const location = useLocation();
@@ -20,11 +21,11 @@ const Review = ({ visible, onCancel, token }) => {
         rating: rating,
       };
       await axios.post(`/products/${path}/reviews`, newReview, config);
-      console.log("Review submitted successfully");
+      toast.success("Review submitted successfully");
       window.location.replace(`/products/${path}`);
     } catch (error) {
       console.error("Failed to submit review:", error);
-      setError("Failed to submit review. Please try again later.");
+      toast.error("Failed to submit review. Please try again later.");
     }
   };
 
@@ -37,6 +38,7 @@ const Review = ({ visible, onCancel, token }) => {
   };
 
   return (
+    <>
     <Modal open={visible} title="Rate Product" onCancel={onCancel} footer={null} centered>
       {error && <Alert message={error} type="error" />}
       <Form form={form} onFinish={onFinish} onChange={handleChange}>
@@ -67,6 +69,8 @@ const Review = ({ visible, onCancel, token }) => {
         </Form.Item>
       </Form>
     </Modal>
+    <ToastContainer/>
+    </>
   );
 };
 

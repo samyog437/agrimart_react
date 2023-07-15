@@ -35,42 +35,50 @@ const DeliveryPage = () => {
     };
 
     const handleDeliverySubmit = () => {
-      if (city && area && landmark && contact) {
-        if (contact.length === 10) {
-          const deliveryData = {
-            city,
-            area,
-            landmark,
-            contactNo: parseInt(contact),
-            totalPrice,
-            products: [
-              ...cartItems.map((item, index) => ({
-                productId: item.id,
-                quantity: quantities[index],
-              })),
-            ],
-          };
-    
-          const uniqueProducts = deliveryData.products.filter(
-            (product, index, self) =>
-              index === self.findIndex((p) => p.productId === product.productId)
-          );
-    
-          deliveryData.products = uniqueProducts;
-    
-          try {
-            console.log(deliveryData);
-            sessionStorage.setItem("deliveryData", JSON.stringify(deliveryData));
-            navigate(`/delivery/payment`);
-          } catch (error) {
-            console.log(`the path is ${path}`);
-            console.log(error);
-          }
-        } else {
-          toast.error("Contact number must be 10 characters long.");
-        }
-      } else {
+      if (!city || !area || !landmark || !contact) {
         toast.error("Please fill in all the fields.");
+        if (!city) document.getElementById("city").classList.add("invalid-field");
+        if (!area) document.getElementById("area").classList.add("invalid-field");
+        if (!landmark)
+          document.getElementById("landmark").classList.add("invalid-field");
+        if (!contact) document.getElementById("contact").classList.add("invalid-field");
+        return;
+      }
+  
+      if (contact.length !== 10) {
+        toast.error("Contact number must be 10 characters long.");
+        document.getElementById("contact").classList.add("invalid-field");
+        return;
+      }
+  
+      const deliveryData = {
+        city,
+        area,
+        landmark,
+        contactNo: parseInt(contact),
+        totalPrice,
+        products: [
+          ...cartItems.map((item, index) => ({
+            productId: item.id,
+            quantity: quantities[index],
+          })),
+        ],
+      };
+  
+      const uniqueProducts = deliveryData.products.filter(
+        (product, index, self) =>
+          index === self.findIndex((p) => p.productId === product.productId)
+      );
+  
+      deliveryData.products = uniqueProducts;
+  
+      try {
+        console.log(deliveryData);
+        sessionStorage.setItem("deliveryData", JSON.stringify(deliveryData));
+        navigate(`/delivery/payment`);
+      } catch (error) {
+        console.log(`the path is ${path}`);
+        console.log(error);
       }
     };
     
