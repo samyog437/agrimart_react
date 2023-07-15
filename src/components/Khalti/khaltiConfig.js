@@ -6,9 +6,9 @@ import { useNavigate } from 'react-router-dom';
 let khaltiConfig = {
     // replace this key with yours
     "publicKey": myKey.publicTestKey,
-    "productIdentity": "1234567890",
+    "productIdentity": "64b0215eabac68b3a947a07c",
     "productName": "Drogon",
-    "productUrl": "http://gameofthrones.com/buy/Dragons",
+    "productUrl": "http://localhost:3000/products/64b0215eabac68b3a947a07c",
     "eventHandler": {
         onSuccess (payload) {
             // hit merchant api for initiating verfication

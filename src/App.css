@@ -757,6 +757,11 @@ width: 800px;
   padding-right: 2px!important;
 }
 
+.responsive-table {
+  width: 100%;
+}
+
+
 @media screen and (max-width: 1230px) {
   .sort-class-parent {
     display: inline-flex;
@@ -823,6 +828,10 @@ width: 800px;
   .product-image-container{
     margin: 2rem 0 0 0;
     width: 450px;
+  }
+
+  .responsive-table .ant-table {
+    overflow-x: scroll;
   }
 }
 
@@ -947,6 +956,7 @@ width: 800px;
   }
 
 }
+
 
 
 /* .ant-tabs-tab-active {

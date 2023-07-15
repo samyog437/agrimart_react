@@ -140,10 +140,10 @@ const OrdersTab = ({ deliveries, handleDeliveryStatusChange, handleOrderDelete }
     <Table
       dataSource={deliveries}
       columns={deliveryColumns}
+      className="responsive-table"
       pagination={{
         pageSize: 5,
       }}
-      className="table-container"
     />
   );
 };
