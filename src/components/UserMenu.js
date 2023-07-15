@@ -1,4 +1,4 @@
-import { DownOutlined } from "@ant-design/icons";
+import { DownOutlined, LogoutOutlined, ShoppingCartOutlined, UserOutlined } from "@ant-design/icons";
 import { Avatar, Button, Dropdown, Space } from "antd";
 import { Link } from "react-router-dom";
 
@@ -14,7 +14,7 @@ const UserMenu = (props) => {
       key: "1",
       label: (
         <Link to={`/user/${props.user._id}`}>
-          <Button type="link" className="menu-btn" >My Profile</Button>
+          <Button type="link" className="menu-btn" ><UserOutlined style={{fontSize: "18px"}} />My Profile</Button>
         </Link>
       ),
     },
@@ -22,7 +22,7 @@ const UserMenu = (props) => {
       key: "2",
       label: (
         <Link to={`/cart`}>
-          <Button type="link" className="menu-btn">My Cart</Button>
+          <Button type="link" className="menu-btn" ><ShoppingCartOutlined style={{fontSize: "20px"}} />My Cart</Button>
         </Link>
       ),
     },
@@ -30,7 +30,7 @@ const UserMenu = (props) => {
       key: "3",
       label: (
         <Button type="link" onClick={logout} danger className="danger-menu-btn">
-          Logout
+          <LogoutOutlined style={{fontSize: "18px"}} />Logout
         </Button>
       ),
     },

@@ -46,7 +46,8 @@ const ProductPage = ({user}) => {
     const config = { headers: { Authorization: `Bearer ${token}` } };
 
     const revUserId = localStorage.getItem("userId");
-    const revAdmin = user && user.role === "Admin";
+    const revAdmin = localStorage.getItem("role") === "Admin";
+
 
     useEffect(() => {
         const getProduct = async () => {
@@ -73,7 +74,7 @@ const ProductPage = ({user}) => {
       const queryParams = new URLSearchParams();
       queryParams.append("productId", sessionStorage.getItem("productId"));
       queryParams.append("quantity", quantity);
-      queryParams.append("totalPrice", product.price * quantity);
+      queryParams.append("totalPrice", product.price);
       
       navigate(`/buy-now/delivery?${queryParams.toString()}`);
     };
@@ -130,6 +131,7 @@ const ProductPage = ({user}) => {
     
 
     const handleDeleteConfirm = () => {
+      console.log(revAdmin)
       handleConfirmDeleteReview();
       setDeleteModalVisible(false);
     };
@@ -159,7 +161,7 @@ const ProductPage = ({user}) => {
                 />
               </div>
             </div>
-            <div className="review_body">
+            <div className="review_body"> 
               {review.body}
               {(review.reviewer_id === revUserId || revAdmin) && (
               <div className="review_actions">
@@ -285,11 +287,10 @@ const ProductPage = ({user}) => {
                 onClick={handleDeleteCancel}
                 className="delete-button"
               >
-                <DeleteOutlined />
                 Cancel
               </Button>,
               <Button key="ok" onClick={handleDeleteConfirm} className="ok-button">
-                <ExclamationCircleFilled />
+                <DeleteOutlined />
                 Delete
               </Button>,
             ]}

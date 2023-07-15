@@ -3,6 +3,8 @@ import { useContext, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { CartContext } from "../components/CartContext";
 import { ToastContainer, toast } from "react-toastify";
+import { ArrowLeftOutlined } from "@ant-design/icons";
+import { Button } from "antd";
 
 const DeliveryPage = () => {
     const location = useLocation()
@@ -81,6 +83,10 @@ const DeliveryPage = () => {
         console.log(error);
       }
     };
+
+    const handleGoBack = () => {
+      navigate(-1); // Navigate back to the previous page
+    };
     
     
     return (
@@ -88,6 +94,16 @@ const DeliveryPage = () => {
         <div className="text-center">
       <h2>Delivery Address</h2>
       <div className="user-form">
+      <div className="sort-class" style={{display: "flex", flexDirection: "row-reverse", marginRight: "10rem"}}>
+          <Button
+            danger
+            icon={<ArrowLeftOutlined />}
+            style={{ marginBottom: "1rem" }}
+            onClick={handleGoBack}
+          >
+            Back
+          </Button>
+        </div>
         <div className="form-content">
           <div className="form-group">
             <label htmlFor="city">City</label>

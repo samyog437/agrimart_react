@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { CartContext } from "../components/CartContext";
 import thumb from "../assets/images/thumbnail.jpg";
-import { ArrowDownOutlined, ArrowLeftOutlined, DeleteOutlined, ExclamationCircleOutlined, MinusOutlined, PlusOutlined } from "@ant-design/icons";
+import { ArrowDownOutlined, ArrowLeftOutlined, CloseOutlined, DeleteOutlined, ExclamationCircleOutlined, MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { Modal, Button, Empty } from "antd";
 
@@ -40,6 +40,7 @@ const Cart = () => {
       centered: true, // Center the modal on the screen
       okButtonProps: {
         className: "ok-button",
+        icon: <DeleteOutlined/>
       },
       cancelButtonProps: {
         className: "delete-button",
@@ -187,7 +188,6 @@ const Cart = () => {
             onClick={handleCancelClearCart}
             className="delete-button"
           >
-            <DeleteOutlined />
             Cancel
           </Button>,
           <Button
@@ -195,7 +195,7 @@ const Cart = () => {
             onClick={handleClearCart}
             className="ok-button"
           >
-            <ExclamationCircleOutlined />
+            <DeleteOutlined />
             Clear
           </Button>,
         ]}

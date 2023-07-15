@@ -42,6 +42,7 @@ const LoginForm = () => {
       const res = await axios.post("/user/login", user);
       localStorage.setItem("userId", res.data.userId);
       localStorage.setItem("token", res.data.token);
+      localStorage.setItem("role", res.data.role)
       toast.success("Login Successful");
 
       setTimeout(() => {

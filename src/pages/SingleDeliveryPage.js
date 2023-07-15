@@ -3,6 +3,8 @@
   import { useLocation, useNavigate } from "react-router-dom";
   import { CartContext } from "../components/CartContext";
   import { ToastContainer, toast } from "react-toastify";
+import { ArrowLeftOutlined } from "@ant-design/icons";
+import { Button } from "antd";
 
   const SingleDeliveryPage = () => {
       const location = useLocation()
@@ -72,14 +74,26 @@
           if (!contact) document.getElementById("contact").classList.add("invalid-field");
           }
       };
-      
-      
 
+      const handleGoBack = () => {
+        navigate(-1); // Navigate back to the previous page
+      };
+      
       return (
           <>
           <div className="text-center">
         <h2>Delivery Address</h2>
         <div className="user-form">
+        <div className="sort-class" style={{display: "flex", flexDirection: "row-reverse", marginRight: "10rem"}}>
+          <Button
+            danger
+            icon={<ArrowLeftOutlined />}
+            style={{ marginBottom: "1rem" }}
+            onClick={handleGoBack}
+          >
+            Back
+          </Button>
+        </div>
           <div className="form-content">
             <div className="form-group">
               <label htmlFor="city">City</label>
