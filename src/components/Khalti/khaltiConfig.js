@@ -8,7 +8,7 @@ let khaltiConfig = {
     "publicKey": myKey.publicTestKey,
     "productIdentity": "64b0215eabac68b3a947a07c",
     "productName": "Drogon",
-    "productUrl": "http://localhost:3000/products/64b0215eabac68b3a947a07c",
+    "productUrl": "https://agrimart-node.vercel.app/products/64b0215eabac68b3a947a07c",
     "eventHandler": {
         onSuccess (payload) {
             // hit merchant api for initiating verfication
@@ -20,7 +20,7 @@ let khaltiConfig = {
             let config = {
                 headers: {"Authorization": myKey.secretKey}
             };
-            axios.post("http://localhost:5000/user/khalti", data, config)
+            axios.post("https://agrimart-node.vercel.app/user/khalti", data, config)
             .then(response => {
                 console.log(response.data);
                 

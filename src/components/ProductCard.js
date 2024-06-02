@@ -4,7 +4,7 @@ import thumb from "../assets/images/thumbnail.jpg";
 
 const { Meta } = Card;
 const ProductCard = (props) => {
-  const publicFolder = "http://localhost:5000/image/";
+  const publicFolder = "https://agrimart-node.vercel.app/image/";
 
   const calculateAverageRating = () => {
     const reviews = props.data.reviews;

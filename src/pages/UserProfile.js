@@ -27,7 +27,7 @@ const UserProfile = (props) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(3); // Number of orders to display per page
   const token = localStorage.getItem("token");
-  const publicFolder = "http://localhost:5000/image/";
+  const publicFolder = "https://agrimart-node.vercel.app/image/";
 
   const config = { headers: { Authorization: `Bearer ${token}` } };
 

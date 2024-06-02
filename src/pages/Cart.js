@@ -9,7 +9,7 @@ const { confirm } = Modal;
 
 const Cart = () => {
   const { cartItems, removeFromCart, clearCart, updateCartItemQuantity } = useContext(CartContext);
-  const publicFolder = "http://localhost:5000/image/";
+  const publicFolder = "https://agrimart-node.vercel.app/image/";
   const navigate = useNavigate();
   const [clearCartModalVisible, setClearCartModalVisible] = useState(false);
 
