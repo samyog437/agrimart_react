@@ -4,7 +4,7 @@ import { DeleteOutlined, ExclamationCircleFilled } from "@ant-design/icons";
 import thumb from "../../assets/images/thumbnail.jpg";
 
 const ProductListTab = ({ products, handleEdit, handleDelete }) => {
-  const publicFolder = "https://agrimart-node.vercel.app/image/";
+  const publicFolder = "https://agrimart-node.onrender.com/image/";
 
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const [selectedProductId, setSelectedProductId] = useState(null);

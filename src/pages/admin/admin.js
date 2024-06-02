@@ -9,7 +9,7 @@ import { ToastContainer, toast } from "react-toastify";
 const { TabPane } = Tabs;
 
 const AdminPage = (props) => {
-  const publicFolder = "https://agrimart-node.vercel.app/image/";
+  const publicFolder = "https://agrimart-node.onrender.com/image/";
   const [products, setProducts] = useState([]);
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");

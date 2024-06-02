@@ -30,7 +30,7 @@ import { ToastContainer, toast } from "react-toastify";
 const ProductPage = ({user}) => {
     const location = useLocation();
     const path = location.pathname.split("/")[2];
-    const publicFolder = "https://agrimart-node.vercel.app/image/"
+    const publicFolder = "https://agrimart-node.onrender.com/image/"
     const [product, setProduct] = useState();
     const [products, setProducts] = useState([]);
     const [quantity, setQuantity] = useState(1);
